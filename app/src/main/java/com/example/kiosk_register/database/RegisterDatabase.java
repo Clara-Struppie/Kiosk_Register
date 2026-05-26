@@ -8,6 +8,7 @@ import androidx.room.RoomDatabase;
         version = 1
 )
 public abstract class RegisterDatabase extends RoomDatabase {
+    // TT__TT
     public abstract ItemDao itemDao();
     public abstract SaleDao saleDao();
     public abstract SoldItem soldItem();
