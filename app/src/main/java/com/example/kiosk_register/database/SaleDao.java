@@ -14,4 +14,7 @@ public interface SaleDao {
 
     @Query("SELECT * FROM sales ORDER BY id ASC")
     List<Sale> getAllSales();
+
+    //TO DO:
+    //Query for statistics
 }

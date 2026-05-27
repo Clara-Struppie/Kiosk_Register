@@ -13,4 +13,7 @@ public interface SoldItemDao {
 
     @Query("SELECT * FROM soldItems ORDER BY id ASC")
     List<SoldItem> getAllSoldItems();
+
+    //TO DO:
+    //Query for statistics
 }
