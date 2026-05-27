@@ -13,5 +13,5 @@ public interface SaleDao {
     void insert(Sale sale);
 
     @Query("SELECT * FROM sales ORDER BY id ASC")
-    List<Item> getAllSales();
+    List<Sale> getAllSales();
 }

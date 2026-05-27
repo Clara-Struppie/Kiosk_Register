@@ -7,7 +7,6 @@ import androidx.room.PrimaryKey;
 public class SoldItem {
     @PrimaryKey(autoGenerate = true)
     public int id;
-
     public int itemID;
     public int saleID;
     public int qty;
