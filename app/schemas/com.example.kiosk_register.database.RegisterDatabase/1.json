@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "bf58ef7a7e97883255dcea0bde73d888",
+    "identityHash": "c4087052fd9b758310fbbb9db3348585",
     "entities": [
       {
         "tableName": "items",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `price` REAL NOT NULL, `active` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `price` REAL NOT NULL, `active` INTEGER NOT NULL, `buttonNumber` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -17,7 +17,8 @@
           {
             "fieldPath": "name",
             "columnName": "name",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "price",
@@ -28,6 +29,12 @@
           {
             "fieldPath": "active",
             "columnName": "active",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "buttonNumber",
+            "columnName": "buttonNumber",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -71,7 +78,7 @@
       },
       {
         "tableName": "soldItems",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `itemID` INTEGER NOT NULL, `saleID` INTEGER NOT NULL, `quantity` INTEGER NOT NULL, `priceAtSale` REAL NOT NULL, FOREIGN KEY(`itemID`) REFERENCES `items`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`saleID`) REFERENCES `sales`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `itemID` INTEGER NOT NULL, `saleID` INTEGER NOT NULL, `quantity` INTEGER NOT NULL, `priceAtSale` REAL NOT NULL, FOREIGN KEY(`saleID`) REFERENCES `sales`(`id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`itemID`) REFERENCES `items`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -123,22 +130,22 @@
         ],
         "foreignKeys": [
           {
-            "table": "items",
+            "table": "sales",
             "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
+            "onUpdate": "CASCADE",
             "columns": [
-              "itemID"
+              "saleID"
             ],
             "referencedColumns": [
               "id"
             ]
           },
           {
-            "table": "sales",
+            "table": "items",
             "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
+            "onUpdate": "CASCADE",
             "columns": [
-              "saleID"
+              "itemID"
             ],
             "referencedColumns": [
               "id"
@@ -149,7 +156,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'bf58ef7a7e97883255dcea0bde73d888')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c4087052fd9b758310fbbb9db3348585')"
     ]
   }
 }

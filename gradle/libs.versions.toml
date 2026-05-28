@@ -1,5 +1,6 @@
 [versions]
 agp = "9.2.1"
+gridlayout = "1.1.0"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
@@ -11,6 +12,7 @@ roomRuntime = "2.8.4"
 roomCompiler = "2.8.4"
 
 [libraries]
+gridlayout = { module = "androidx.gridlayout:gridlayout", version.ref = "gridlayout" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

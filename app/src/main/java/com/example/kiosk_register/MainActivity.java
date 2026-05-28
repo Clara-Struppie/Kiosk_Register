@@ -1,6 +1,10 @@
 package com.example.kiosk_register;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,7 +13,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.room.Room;
 
+import com.example.kiosk_register.database.Item;
 import com.example.kiosk_register.database.RegisterDatabase;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
                 getApplicationContext(),
                 RegisterDatabase.class,
                 "kiosk_register"
-        ).createFromAsset("database/kiosk_register.db").build();
+        ).createFromAsset("database/kiosk_register.db").allowMainThreadQueries().build();
 
 /*
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -34,5 +41,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
  */
+    }
+
+    public void toggle(View v) {
+        v.setEnabled(false);
+        TextView t = findViewById(R.id.hello);
+        t.setText("Goodbye, cruel world!");
+        Button b = (Button) v;
+        b.setText("Ich bin weg :c");
     }
 }

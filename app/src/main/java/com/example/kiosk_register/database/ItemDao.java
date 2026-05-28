@@ -16,6 +16,6 @@ public interface ItemDao {
     void toggleOff(int itemID);
     @Query("UPDATE items SET active = 1 WHERE id = :itemID")
     void toggleOn(int itemID);
-    @Query("SELECT * FROM items ORDER BY id ASC")
-    List<Item> getAllItems();
+    @Query("SELECT * FROM items WHERE active = 1 ORDER BY id ASC")
+    List<Item> getActiveItems();
 }
