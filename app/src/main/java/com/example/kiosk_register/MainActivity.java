@@ -19,13 +19,15 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.kiosk_register.dataInteraction.ControllerDB;
 import com.example.kiosk_register.database.Item;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class MainActivity extends AppCompatActivity {
     private ControllerDB controllerDB;
     private List<Item> itemList;
+    private HashMap<Integer, Integer> shoppingCart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
             });
 
         });
+        shoppingCart = new HashMap<>();
+        adjustTotal();
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -59,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     This function initiates the buttons for the kiosk items by assigning each item to their corresponding
     button determined in the database. If there is an unused button at the end, it gets disabled.
      */
-    public void initiateButtons() {
+    private void initiateButtons() {
         // get a List of all Buttons in the Grid to avoid using getIdentifier
         View grid = findViewById(R.id.buttonGrid);
 
@@ -81,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
             Button button = buttons.get(buttonNumber);
 
             String price = String.format("%.2f", itemList.get(i).price);
-            DecimalFormat df = new DecimalFormat("#.##");
             String buttonText = itemList.get(i).name +
                     System.lineSeparator() +
                     System.lineSeparator() +
@@ -97,14 +100,14 @@ public class MainActivity extends AppCompatActivity {
     /*
     Inverts a button's enabled state
      */
-    public void toggle(View v) {
+    private void toggle(View v) {
         v.setEnabled(!v.isEnabled());
     }
 
     /*
     Buttons without text are being disabled to be unusable
      */
-    public void disableEmptyButtons(@NonNull List<Button> buttons) {
+    private void disableEmptyButtons(@NonNull List<Button> buttons) {
         for (Button button: buttons) {
             if(button.getText().equals("")) {
                 toggle(button);
@@ -118,9 +121,11 @@ public class MainActivity extends AppCompatActivity {
      */
     public void addToCart(View view) {
         Button button = (Button) view;
-
+        activatePayment();
         if (button != null) {
             ViewGroup layout = findViewById(R.id.cartLayout);
+
+            // Create a row with two entries:
             LinearLayout row = new LinearLayout(this);
             row.setOrientation(LinearLayout.HORIZONTAL);
             row.setLayoutParams(new LinearLayout.LayoutParams(
@@ -130,15 +135,18 @@ public class MainActivity extends AppCompatActivity {
             TextView nameView = new TextView(this);
             TextView priceView = new TextView(this);
 
-
             nameView.setLayoutParams(new LinearLayout.LayoutParams(
                     0,
                     ViewGroup.LayoutParams.WRAP_CONTENT, 1f
             ));
             priceView.setGravity(Gravity.END);
 
+            // add item to shopping cart hash map
+            int itemID = (int) button.getTag();
+            increaseCartTotal(itemID);
+
             App.DB_EXECUTOR.execute(() -> {
-                Item item = controllerDB.getItemByID((int) button.getTag());
+                Item item = controllerDB.getItemByID(itemID);
                 runOnUiThread(() -> {
 
                     String price = String.format("%.2f", item.price);
@@ -149,10 +157,56 @@ public class MainActivity extends AppCompatActivity {
                     row.addView(priceView);
 
                     layout.addView(row);
+                    adjustTotal();
                 });
             });
         }
     }
 
+    private void adjustTotal() {
+        TextView totalView = findViewById(R.id.totalText);
+        if (shoppingCart.isEmpty()) {
+            String totalText = "Total: 0.00 €";
+            totalView.setText(totalText);
+        } else {
+            App.DB_EXECUTOR.execute(() -> {
+                List<Item> items = controllerDB.getActiveList();
+                double total = 0.0;
 
+                for (Integer i : shoppingCart.keySet()) {
+                    double price = items.get(i).price;
+                    if (shoppingCart.containsKey(i)) {
+                        int countItem = shoppingCart.get(i);
+                        total += countItem * price;
+                    }
+                }
+
+                double finalTotal = total;
+
+                runOnUiThread(() -> {
+                    String totalPrice = String.format("%.2f", finalTotal);
+                    String totalText = "Total: " + totalPrice + "€";
+                    totalView.setText(totalText);
+                });
+
+            });
+        }
+    }
+
+    private void increaseCartTotal(int itemID) {
+        if (shoppingCart.containsKey(itemID)) {
+            shoppingCart.put(itemID, shoppingCart.get(itemID) + 1);
+        } else {
+            shoppingCart.put(itemID, 1);
+        }
+    }
+
+    private void activatePayment() {
+        View payButton = findViewById(R.id.payButton);
+        if (!payButton.isEnabled()) {
+            toggle(payButton);
+        }
+    }
 }
+
+

@@ -28,6 +28,4 @@ public class ControllerDB {
     public List<Item> getActiveList() {
         return itemDao.getActiveItems();
     }
-
-
 }
