@@ -207,6 +207,11 @@ public class MainActivity extends AppCompatActivity {
             toggle(payButton);
         }
     }
+
+
+    public void addPfand(View view) {
+        return;
+    }
 }
 
 

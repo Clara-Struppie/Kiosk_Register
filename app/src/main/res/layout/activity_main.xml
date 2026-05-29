@@ -375,6 +375,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="#FFFFFF"
+            android:onClick="addPfand"
             android:text="Rückgabe \n Pfand"
             app:layout_column="5"
             app:layout_columnWeight="1"
