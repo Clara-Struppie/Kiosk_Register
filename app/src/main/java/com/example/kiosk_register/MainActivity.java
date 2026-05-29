@@ -2,11 +2,15 @@ package com.example.kiosk_register;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -20,17 +24,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    ControllerDB db;
+    private ControllerDB controllerDB;
+    private List<Item> itemList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        db = new ControllerDB(getApplicationContext());
-        List<Item> itemList = db.getActiveList();
+        // initiates database controller and buttons
+        controllerDB = new ControllerDB(this);
 
-        initiateButtons(itemList);
+        App.DB_EXECUTOR.execute(() -> {
+            itemList = controllerDB.getActiveList();
+
+            runOnUiThread(() -> {
+                initiateButtons();
+            });
+
+        });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -42,7 +55,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    public void initiateButtons(List<Item> itemList) {
+    /*
+    This function initiates the buttons for the kiosk items by assigning each item to their corresponding
+    button determined in the database. If there is an unused button at the end, it gets disabled.
+     */
+    public void initiateButtons() {
         // get a List of all Buttons in the Grid to avoid using getIdentifier
         View grid = findViewById(R.id.buttonGrid);
 
@@ -71,9 +88,70 @@ public class MainActivity extends AppCompatActivity {
                     System.lineSeparator() +
                     price + "€";
             button.setText(buttonText);
+            button.setTag(itemList.get(i).id);
         }
+        // next disable all unused buttons
+        disableEmptyButtons(buttons);
+    }
 
-        db.disableEmptyButtons(buttons);
+    /*
+    Inverts a button's enabled state
+     */
+    public void toggle(View v) {
+        v.setEnabled(!v.isEnabled());
+    }
+
+    /*
+    Buttons without text are being disabled to be unusable
+     */
+    public void disableEmptyButtons(@NonNull List<Button> buttons) {
+        for (Button button: buttons) {
+            if(button.getText().equals("")) {
+                toggle(button);
+            }
+        }
+    }
+
+    /*
+    Adds new item to cart. In case of the price changing since being stored at the start of the activity,
+    we use a db request instead of looking it up right in the list or storing the item itself as a tag.
+     */
+    public void addToCart(View view) {
+        Button button = (Button) view;
+
+        if (button != null) {
+            ViewGroup layout = findViewById(R.id.cartLayout);
+            LinearLayout row = new LinearLayout(this);
+            row.setOrientation(LinearLayout.HORIZONTAL);
+            row.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            ));
+            TextView nameView = new TextView(this);
+            TextView priceView = new TextView(this);
+
+
+            nameView.setLayoutParams(new LinearLayout.LayoutParams(
+                    0,
+                    ViewGroup.LayoutParams.WRAP_CONTENT, 1f
+            ));
+            priceView.setGravity(Gravity.END);
+
+            App.DB_EXECUTOR.execute(() -> {
+                Item item = controllerDB.getItemByID((int) button.getTag());
+                runOnUiThread(() -> {
+
+                    String price = String.format("%.2f", item.price);
+                    String name = item.name;
+                    nameView.setText(name);
+                    priceView.setText(price + "€");
+                    row.addView(nameView);
+                    row.addView(priceView);
+
+                    layout.addView(row);
+                });
+            });
+        }
     }
 
 

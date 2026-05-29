@@ -8,33 +8,26 @@ import androidx.annotation.NonNull;
 import androidx.room.Room;
 
 import com.example.kiosk_register.database.Item;
+import com.example.kiosk_register.database.ItemDao;
 import com.example.kiosk_register.database.RegisterDatabase;
 
 import java.util.List;
 
 public class ControllerDB {
-    RegisterDatabase db;
+    private final ItemDao itemDao;
+
     public ControllerDB(Context context) {
-        db = Room.databaseBuilder(
-                context,
-                RegisterDatabase.class,
-                "kiosk_register"
-        ).createFromAsset("database/kiosk_register.db").allowMainThreadQueries().build();
+        RegisterDatabase db = RegisterDatabase.getInstance(context);
+
+        itemDao = db.itemDao();
     }
 
+    public Item getItemByID(int itemID) {
+        return itemDao.getItemByID(itemID);
+    }
     public List<Item> getActiveList() {
-        return db.itemDao().getActiveItems();
+        return itemDao.getActiveItems();
     }
 
-    public void toggle(View v) {
-        v.setEnabled(false);
-    }
 
-    public void disableEmptyButtons(@NonNull List<Button> buttons) {
-        for (Button button: buttons) {
-            if(button.getText().equals("")) {
-                toggle(button);
-            }
-        }
-    }
 }
