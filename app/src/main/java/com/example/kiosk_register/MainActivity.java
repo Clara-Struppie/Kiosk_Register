@@ -1,26 +1,22 @@
 package com.example.kiosk_register;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.room.Room;
 
 import com.example.kiosk_register.dataInteraction.ControllerDB;
 import com.example.kiosk_register.database.Item;
-import com.example.kiosk_register.database.RegisterDatabase;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -67,7 +63,14 @@ public class MainActivity extends AppCompatActivity {
             }
             Button button = buttons.get(buttonNumber);
 
-            button.setText(itemList.get(i).name);
+            String price = String.format("%.2f", itemList.get(i).price);
+            DecimalFormat df = new DecimalFormat("#.##");
+            String buttonText = itemList.get(i).name +
+                    System.lineSeparator() +
+                    System.lineSeparator() +
+                    System.lineSeparator() +
+                    price + "€";
+            button.setText(buttonText);
         }
 
         db.disableEmptyButtons(buttons);

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.room.Room;
 
 import com.example.kiosk_register.database.Item;
@@ -29,7 +30,7 @@ public class ControllerDB {
         v.setEnabled(false);
     }
 
-    public void disableEmptyButtons(List<Button> buttons) {
+    public void disableEmptyButtons(@NonNull List<Button> buttons) {
         for (Button button: buttons) {
             if(button.getText().equals("")) {
                 toggle(button);
