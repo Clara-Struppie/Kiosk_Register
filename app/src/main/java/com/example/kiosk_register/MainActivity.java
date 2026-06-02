@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
         App.DB_EXECUTOR.execute(() -> {
             itemList = controllerDB.getActiveList();
-
             runOnUiThread(() -> {
                 initiateButtons();
             });
@@ -72,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < ((ViewGroup) grid).getChildCount(); i++) {
             buttons.add((Button) ((ViewGroup) grid).getChildAt(i));
         }
-
         // set the text of all buttons according to the database entry
         for (int i = 0; i < itemList.size(); i++) {
             int buttonNumber = itemList.get(i).buttonNumber - 1;
