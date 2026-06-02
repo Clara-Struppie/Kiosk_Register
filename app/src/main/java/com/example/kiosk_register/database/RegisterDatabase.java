@@ -9,9 +9,9 @@ import androidx.room.RoomDatabase;
 
 @Database(
         entities = {Item.class, Sale.class, SoldItem.class},
-        version = 2,
+        version = 3,
         autoMigrations = {
-                @AutoMigration(from = 1, to = 2)
+                @AutoMigration(from = 2, to = 3)
         }
 )
 public abstract class RegisterDatabase extends RoomDatabase {
@@ -27,7 +27,7 @@ public abstract class RegisterDatabase extends RoomDatabase {
                     context.getApplicationContext(),
                     RegisterDatabase.class,
                     "kiosk_register"
-            ).build();
+            ).createFromAsset("database/kiosk_register.db").build();
         }
         return instance;
     }
