@@ -371,12 +371,12 @@
             app:layout_rowWeight="1" />
 
         <Button
-            android:id="@+id/buttonPfand"
+            android:id="@+id/button30"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="#FFFFFF"
-            android:onClick="addPfand"
-            android:text="Rückgabe \n Pfand"
+            android:onClick="addToCart"
+            android:text=""
             app:layout_column="5"
             app:layout_columnWeight="1"
             app:layout_row="4"

@@ -22,11 +22,10 @@ import com.example.kiosk_register.database.Item;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class MainActivity extends AppCompatActivity {
     private ControllerDB controllerDB;
-    private List<Item> itemList;
+    private HashMap<Integer, Item> itemList;
     private HashMap<Integer, Integer> shoppingCart;
 
     @Override
@@ -39,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
         controllerDB = new ControllerDB(this);
 
         App.DB_EXECUTOR.execute(() -> {
-            itemList = controllerDB.getActiveList();
+             itemList = createItemList();
+
             runOnUiThread(() -> {
                 initiateButtons();
             });
@@ -55,21 +55,29 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private HashMap<Integer, Item> createItemList() {
+        List<Item> list = controllerDB.getActiveList();
+        HashMap<Integer, Item> itemMap = new HashMap<>();
+        for (Item item: list) {
+            itemMap.put(item.id, item);
+        }
+        return itemMap;
+    }
     /*
     This function initiates the buttons for the kiosk items by assigning each item to their corresponding
     button determined in the database. If there is an unused button at the end, it gets disabled.
      */
     private void initiateButtons() {
         // get a List of all Buttons in the Grid to avoid using getIdentifier
-        View grid = findViewById(R.id.buttonGrid);
+        ViewGroup grid = findViewById(R.id.buttonGrid);
 
         List<Button> buttons = new ArrayList<>();
 
-        for (int i = 0; i < ((ViewGroup) grid).getChildCount(); i++) {
-            buttons.add((Button) ((ViewGroup) grid).getChildAt(i));
+        for (int i = 0; i < grid.getChildCount(); i++) {
+            buttons.add((Button) grid.getChildAt(i));
         }
         // set the text of all buttons according to the database entry
-        for (int i = 0; i < itemList.size(); i++) {
+        for (Integer i: itemList.keySet()) {
             int buttonNumber = itemList.get(i).buttonNumber - 1;
 
             // in case we somehow have a faulty index in our database get rid of that here
@@ -164,27 +172,22 @@ public class MainActivity extends AppCompatActivity {
             String totalText = "Total: 0.00 €";
             totalView.setText(totalText);
         } else {
-            App.DB_EXECUTOR.execute(() -> {
-                List<Item> items = controllerDB.getActiveList();
-                double total = 0.0;
+            double total = 0.0;
 
-                for (Integer i : shoppingCart.keySet()) {
-                    double price = items.get(i).price;
-                    if (shoppingCart.containsKey(i)) {
-                        int countItem = shoppingCart.get(i);
-                        total += countItem * price;
-                    }
+            for (Integer i : shoppingCart.keySet()) {
+                double price = itemList.get(i).price;
+                if (shoppingCart.containsKey(i)) {
+                    int countItem = shoppingCart.get(i);
+                    total += countItem * price;
                 }
+            }
 
-                double finalTotal = total;
+            double finalTotal = total;
 
-                runOnUiThread(() -> {
-                    String totalPrice = String.format("%.2f", finalTotal);
-                    String totalText = "Total: " + totalPrice + "€";
-                    totalView.setText(totalText);
-                });
+            String totalPrice = String.format("%.2f", finalTotal);
+            String totalText = "Total: " + totalPrice + "€";
+            totalView.setText(totalText);
 
-            });
         }
     }
 
@@ -201,11 +204,6 @@ public class MainActivity extends AppCompatActivity {
         if (!payButton.isEnabled()) {
             toggle(payButton);
         }
-    }
-
-
-    public void addPfand(View view) {
-        return;
     }
 }
 

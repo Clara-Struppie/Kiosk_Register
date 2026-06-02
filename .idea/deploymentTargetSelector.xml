@@ -4,10 +4,17 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
+<<<<<<< Updated upstream
         <DropdownSelection timestamp="2026-06-02T15:02:10.508795Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\derst\.android\avd\Pixel_Tablet.avd" />
+=======
+        <DropdownSelection timestamp="2026-06-02T14:45:13.024316900Z">
+          <Target type="DEFAULT_BOOT">
+            <handle>
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\derst\.android\avd\Medium_Tablet.avd" />
+>>>>>>> Stashed changes
             </handle>
           </Target>
         </DropdownSelection>
