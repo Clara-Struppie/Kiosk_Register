@@ -53,10 +53,7 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
     }
-
-
 
     /*
     This function initiates the buttons for the kiosk items by assigning each item to their corresponding
