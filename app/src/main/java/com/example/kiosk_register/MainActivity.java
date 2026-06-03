@@ -119,6 +119,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private LinearLayout createRow() {
+        LinearLayout row = new LinearLayout(this);
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        row.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        ));
+
+        return row;
+    }
     /*
     Adds new item to cart. In case of the price changing since being stored at the start of the activity,
     we use a db request instead of looking it up right in the list or storing the item itself as a tag.
@@ -127,37 +137,74 @@ public class MainActivity extends AppCompatActivity {
         Button button = (Button) view;
         activatePayment();
         if (button != null) {
-            ViewGroup layout = findViewById(R.id.cartLayout);
+            Item item = (Item) button.getTag();
+
+            // add item to shopping cart hash map
+            increaseCartTotal(item.id);
+
+            writeReceiptLine(item);
+
+            adjustTotal();
+        }
+    }
+
+    private void writeReceiptLine(Item item) {
+        ViewGroup layout = findViewById(R.id.cartLayout);
+
+        String name = item.name;
+        String price = String.format("%.2f", item.price);
+        String count = shoppingCart.get(item.id).toString();
+        String topRowTag = name + "topRow";
+        String bottomRowTag = name + "bottomRow";
+
+        if (shoppingCart.get(item.id) == 1) {
 
             // Create a row with two entries:
-            LinearLayout row = new LinearLayout(this);
-            row.setOrientation(LinearLayout.HORIZONTAL);
-            row.setLayoutParams(new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-            ));
-            TextView nameView = new TextView(this);
-            TextView priceView = new TextView(this);
+            LinearLayout topRow = createRow();
+            TextView bottomRow = new TextView(this);
+            TextView nameText = new TextView(this);
+            nameText.setTag("nameText");
+            TextView priceText = new TextView(this);
+            priceText.setTag("priceText");
 
-            nameView.setLayoutParams(new LinearLayout.LayoutParams(
+            nameText.setLayoutParams(new LinearLayout.LayoutParams(
                     0,
                     ViewGroup.LayoutParams.WRAP_CONTENT, 1f
             ));
-            priceView.setGravity(Gravity.END);
+            priceText.setGravity(Gravity.END);
+            nameText.setTextSize(20);
+            priceText.setTextSize(20);
 
-            // add item to shopping cart hash map
-            Item item = (Item) button.getTag();
-            increaseCartTotal(item.id);
-            
-            String price = String.format("%.2f", item.price);
-            String name = item.name;
-            nameView.setText(name);
-            priceView.setText(price + "€");
-            row.addView(nameView);
-            row.addView(priceView);
+            String fullNameText = count + " " + name;
 
-            layout.addView(row);
-            adjustTotal();
+            nameText.setText(fullNameText);
+            priceText.setText(price + "€");
+
+            topRow.setTag(topRowTag);
+            topRow.addView(nameText);
+            topRow.addView(priceText);
+
+            String bottomText = "\t" + count + "x " + price;
+            bottomRow.setTag(bottomRowTag);
+            bottomRow.setText(bottomText);
+
+            layout.addView(topRow);
+            layout.addView(bottomRow);
+        } else {
+
+            LinearLayout topRow = layout.findViewWithTag(topRowTag);
+            TextView nameText = topRow.findViewWithTag("nameText");
+            String newText = count + " " + name;
+            nameText.setText(newText);
+
+            TextView priceText = topRow.findViewWithTag("priceText");
+            double totalPrice = item.price * shoppingCart.get(item.id);
+            String newPrice = String.format("%.2f", totalPrice);
+            priceText.setText(newPrice);
+
+            TextView bottomRow = layout.findViewWithTag(bottomRowTag);
+            String bottomText = "\t" + count + "x " + price;
+            bottomRow.setText(bottomText);
         }
     }
 
