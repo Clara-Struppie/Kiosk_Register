@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         controllerDB = new ControllerDB(this);
 
         App.DB_EXECUTOR.execute(() -> {
-             itemList = createItemList();
+            itemList = createItemList();
 
             runOnUiThread(() -> {
                 initiateButtons();
@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return itemMap;
     }
+
     /*
     This function initiates the buttons for the kiosk items by assigning each item to their corresponding
     button determined in the database. If there is an unused button at the end, it gets disabled.
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                     System.lineSeparator() +
                     price + "€";
             button.setText(buttonText);
-            button.setTag(itemList.get(i).id);
+            button.setTag(itemList.get(i));
         }
         // next disable all unused buttons
         disableEmptyButtons(buttons);
@@ -145,24 +146,18 @@ public class MainActivity extends AppCompatActivity {
             priceView.setGravity(Gravity.END);
 
             // add item to shopping cart hash map
-            int itemID = (int) button.getTag();
-            increaseCartTotal(itemID);
+            Item item = (Item) button.getTag();
+            increaseCartTotal(item.id);
+            
+            String price = String.format("%.2f", item.price);
+            String name = item.name;
+            nameView.setText(name);
+            priceView.setText(price + "€");
+            row.addView(nameView);
+            row.addView(priceView);
 
-            App.DB_EXECUTOR.execute(() -> {
-                Item item = controllerDB.getItemByID(itemID);
-                runOnUiThread(() -> {
-
-                    String price = String.format("%.2f", item.price);
-                    String name = item.name;
-                    nameView.setText(name);
-                    priceView.setText(price + "€");
-                    row.addView(nameView);
-                    row.addView(priceView);
-
-                    layout.addView(row);
-                    adjustTotal();
-                });
-            });
+            layout.addView(row);
+            adjustTotal();
         }
     }
 
