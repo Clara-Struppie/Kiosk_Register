@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -129,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
         return row;
     }
+
     /*
     Adds new item to cart. In case of the price changing since being stored at the start of the activity,
     we use a db request instead of looking it up right in the list or storing the item itself as a tag.
@@ -158,40 +160,38 @@ public class MainActivity extends AppCompatActivity {
         String bottomRowTag = name + "bottomRow";
 
         if (shoppingCart.get(item.id) == 1) {
-
-            // Create a row with two entries:
-            LinearLayout topRow = createRow();
-            TextView bottomRow = new TextView(this);
             TextView nameText = new TextView(this);
             nameText.setTag("nameText");
-            TextView priceText = new TextView(this);
-            priceText.setTag("priceText");
-
             nameText.setLayoutParams(new LinearLayout.LayoutParams(
                     0,
                     ViewGroup.LayoutParams.WRAP_CONTENT, 1f
             ));
-            priceText.setGravity(Gravity.END);
             nameText.setTextSize(20);
-            priceText.setTextSize(20);
-
             String fullNameText = count + " " + name;
-
             nameText.setText(fullNameText);
-            priceText.setText(price + "€");
 
+            TextView priceText = new TextView(this);
+            priceText.setTag("priceText");
+            priceText.setGravity(Gravity.END);
+            priceText.setTextSize(20);
+            priceText.setText(price);
+
+            LinearLayout topRow = createRow();
             topRow.setTag(topRowTag);
             topRow.addView(nameText);
             topRow.addView(priceText);
+
+            TableLayout block = createTableLayout(item);
+            block.addView(topRow);
+            TextView bottomRow = new TextView(this);
+            block.addView(bottomRow);
 
             String bottomText = "\t" + count + "x " + price;
             bottomRow.setTag(bottomRowTag);
             bottomRow.setText(bottomText);
 
-            layout.addView(topRow);
-            layout.addView(bottomRow);
+            layout.addView(block);
         } else {
-
             LinearLayout topRow = layout.findViewWithTag(topRowTag);
             TextView nameText = topRow.findViewWithTag("nameText");
             String newText = count + " " + name;
@@ -206,6 +206,21 @@ public class MainActivity extends AppCompatActivity {
             String bottomText = "\t" + count + "x " + price;
             bottomRow.setText(bottomText);
         }
+    }
+
+    @NonNull
+    private TableLayout createTableLayout(Item item) {
+        TableLayout block = new TableLayout(this);
+        block.setOrientation(LinearLayout.HORIZONTAL);
+        block.setPadding(5,5,5,5);
+        block.setTag(item);
+        block.setLongClickable(true);
+
+        block.setOnLongClickListener(v -> {
+            removePosition((LinearLayout) v);
+            return true;
+        });
+        return block;
     }
 
     private void adjustTotal() {
@@ -245,6 +260,18 @@ public class MainActivity extends AppCompatActivity {
         View payButton = findViewById(R.id.payButton);
         if (!payButton.isEnabled()) {
             toggle(payButton);
+        }
+    }
+
+    private void removePosition(LinearLayout row) {
+        row.removeAllViews();
+        ViewGroup parent = (ViewGroup) row.getParent();
+        parent.removeView(row);
+        Item item = (Item) row.getTag();
+        if (item != null) {
+            Integer itemID = item.id;
+            shoppingCart.remove(itemID);
+            adjustTotal();
         }
     }
 }
