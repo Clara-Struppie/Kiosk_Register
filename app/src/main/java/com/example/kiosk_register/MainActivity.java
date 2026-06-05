@@ -20,6 +20,8 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.kiosk_register.dataInteraction.ControllerDB;
 import com.example.kiosk_register.database.Item;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        // initiates database controller and buttons
+        // Initialize the DB Controller, itemList and shoppingCart. Also sets the display of the Total
+
         controllerDB = new ControllerDB(this);
 
         App.DB_EXECUTOR.execute(() -> {
@@ -56,6 +59,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /*
+    Creates a HashMap of all items from the database who's "active" status is set to true. This itemList
+    is used globally to quickly access information about the items without having to rely on multiple
+    database queries every time.
+     */
+    @NonNull
     private HashMap<Integer, Item> createItemList() {
         List<Item> list = controllerDB.getActiveList();
         HashMap<Integer, Item> itemMap = new HashMap<>();
@@ -105,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
     /*
     Inverts a button's enabled state
      */
-    private void toggle(View v) {
+    private void toggle(@NonNull View v) {
         v.setEnabled(!v.isEnabled());
     }
 
@@ -118,17 +127,6 @@ public class MainActivity extends AppCompatActivity {
                 toggle(button);
             }
         }
-    }
-
-    private LinearLayout createRow() {
-        LinearLayout row = new LinearLayout(this);
-        row.setOrientation(LinearLayout.HORIZONTAL);
-        row.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        ));
-
-        return row;
     }
 
     /*
@@ -150,7 +148,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void writeReceiptLine(Item item) {
+    /*
+    Manages the display of each unique item position in the receipt on the right side of the Activity.
+    If this is the first instance of an item being added to the cart, this method creates a new box
+    (TableLayout) and fills it with the name, price, count and total of that position.
+    If this is another instance of an already existing item, we instead increase the count and total.
+     */
+    private void writeReceiptLine(@NonNull Item item) {
         ViewGroup layout = findViewById(R.id.cartLayout);
 
         String name = item.name;
@@ -208,6 +212,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /*
+    Creates a new row for the TableLayout in horizontal orientation. Height is set to adjust to content.
+     */
+    @NonNull
+    private LinearLayout createRow() {
+        LinearLayout row = new LinearLayout(this);
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        row.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        ));
+
+        return row;
+    }
+
+    /*
+    Creates the TableLayout (box) for each item position in the receipt. Also creates an OnLongClickListener
+    to remove the item from the position after a long click.
+     */
     @NonNull
     private TableLayout createTableLayout(Item item) {
         TableLayout block = new TableLayout(this);
@@ -223,6 +246,10 @@ public class MainActivity extends AppCompatActivity {
         return block;
     }
 
+    /*
+    Adjusts the display of the total price of the current cart at the bottom right of the Activity.
+    If cart is empty, the display is set to 0.00€, otherwise to the current total of the cart.
+     */
     private void adjustTotal() {
         TextView totalView = findViewById(R.id.totalText);
         if (shoppingCart.isEmpty()) {
@@ -244,10 +271,13 @@ public class MainActivity extends AppCompatActivity {
             String totalPrice = String.format("%.2f", finalTotal);
             String totalText = "Total: " + totalPrice + "€";
             totalView.setText(totalText);
-
         }
     }
 
+    /*
+    Increases the count of an item in the cart. If this item is added for the first time, this creates
+    a new key - value - pair.
+     */
     private void increaseCartTotal(int itemID) {
         if (shoppingCart.containsKey(itemID)) {
             shoppingCart.put(itemID, shoppingCart.get(itemID) + 1);
@@ -256,6 +286,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /*
+    Toggles the "Pay"-button in the bottom right corner of the Activity to true.
+     */
     private void activatePayment() {
         View payButton = findViewById(R.id.payButton);
         if (!payButton.isEnabled()) {
@@ -263,16 +296,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void removePosition(LinearLayout row) {
+    /*
+    Completely removes an item from the shopping cart and from the receipt.
+     */
+    private void removePosition(@NonNull LinearLayout row) {
         row.removeAllViews();
         ViewGroup parent = (ViewGroup) row.getParent();
         parent.removeView(row);
-        Item item = (Item) row.getTag();
-        if (item != null) {
-            Integer itemID = item.id;
-            shoppingCart.remove(itemID);
-            adjustTotal();
-        }
+        @NotNull Item item;
+        item = (Item) row.getTag();
+        Integer itemID = item.id;
+        shoppingCart.remove(itemID);
+        adjustTotal();
     }
 }
 
