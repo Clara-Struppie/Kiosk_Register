@@ -8,18 +8,59 @@ import androidx.room.PrimaryKey;
 public class Item {
 
     @PrimaryKey(autoGenerate = true)
-    public int id;
+    private int id;
     @ColumnInfo(name = "name")
     @NonNull
-    public String name;
+    private String name;
     @ColumnInfo(name = "price")
-    public double price;
+    private double price;
     @ColumnInfo(name = "active")
-    public boolean active;
+    private boolean active;
     @ColumnInfo(name = "buttonNumber")
-    public int buttonNumber;
+    private int buttonNumber;
 
     public Item() {
         name = "";
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    @NonNull
+    public String getName() {
+        return name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public int getButtonNumber() {
+        return buttonNumber;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(@NonNull String name) {
+        this.name = name;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public void setButtonNumber(int buttonNumber) {
+        this.buttonNumber = buttonNumber;
     }
 }

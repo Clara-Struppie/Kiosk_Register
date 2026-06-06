@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         List<Item> list = controllerDB.getActiveList();
         HashMap<Integer, Item> itemMap = new HashMap<>();
         for (Item item: list) {
-            itemMap.put(item.id, item);
+            itemMap.put(item.getId(), item);
         }
         return itemMap;
     }
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         }
         // set the text of all buttons according to the database entry
         for (Integer i: itemList.keySet()) {
-            int buttonNumber = itemList.get(i).buttonNumber - 1;
+            int buttonNumber = itemList.get(i).getButtonNumber() - 1;
 
             // in case we somehow have a faulty index in our database get rid of that here
             if (buttonNumber < 0 || buttonNumber >= buttons.size()) {
@@ -98,8 +98,8 @@ public class MainActivity extends AppCompatActivity {
             }
             Button button = buttons.get(buttonNumber);
 
-            String price = String.format("%.2f", itemList.get(i).price);
-            String buttonText = itemList.get(i).name +
+            String price = String.format("%.2f", itemList.get(i).getPrice());
+            String buttonText = itemList.get(i).getName() +
                     System.lineSeparator() +
                     System.lineSeparator() +
                     System.lineSeparator() +
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
             Item item = (Item) button.getTag();
 
             // add item to shopping cart hash map
-            increaseCartTotal(item.id);
+            increaseCartTotal(item.getId());
 
             writeReceiptLine(item);
 
@@ -157,13 +157,14 @@ public class MainActivity extends AppCompatActivity {
     private void writeReceiptLine(@NonNull Item item) {
         ViewGroup layout = findViewById(R.id.cartLayout);
 
-        String name = item.name;
-        String price = String.format("%.2f", item.price);
-        String count = shoppingCart.get(item.id).toString();
+        String name = item.getName();
+        String price = String.format("%.2f", item.getPrice());
+        String count = shoppingCart.get(item.getId()).toString();
         String topRowTag = name + "topRow";
         String bottomRowTag = name + "bottomRow";
 
-        if (shoppingCart.get(item.id) == 1) {
+        if (shoppingCart.get(item.getId()) == 1) {
+            // sets the display of the item name plus it's total count
             TextView nameText = new TextView(this);
             nameText.setTag("nameText");
             nameText.setLayoutParams(new LinearLayout.LayoutParams(
@@ -174,38 +175,45 @@ public class MainActivity extends AppCompatActivity {
             String fullNameText = count + " " + name;
             nameText.setText(fullNameText);
 
+            // sets the price total at the end of the top row next to the name display
             TextView priceText = new TextView(this);
             priceText.setTag("priceText");
             priceText.setGravity(Gravity.END);
             priceText.setTextSize(20);
             priceText.setText(price);
 
+            // top row includes the following information: count, name and total position price
             LinearLayout topRow = createRow();
             topRow.setTag(topRowTag);
             topRow.addView(nameText);
             topRow.addView(priceText);
 
-            TableLayout block = createTableLayout(item);
-            block.addView(topRow);
-            TextView bottomRow = new TextView(this);
-            block.addView(bottomRow);
-
+            // bottom row displays the total position count and price of a single item
             String bottomText = "\t" + count + "x " + price;
+            TextView bottomRow = new TextView(this);
             bottomRow.setTag(bottomRowTag);
             bottomRow.setText(bottomText);
 
+            TableLayout block = createTableLayout(item);
+            block.addView(topRow);
+            block.addView(bottomRow);
+
             layout.addView(block);
+
         } else {
+            // adjusts the count in the top row
             LinearLayout topRow = layout.findViewWithTag(topRowTag);
             TextView nameText = topRow.findViewWithTag("nameText");
             String newText = count + " " + name;
             nameText.setText(newText);
 
+            // adjusts the total in the top row
             TextView priceText = topRow.findViewWithTag("priceText");
-            double totalPrice = item.price * shoppingCart.get(item.id);
+            double totalPrice = item.getPrice() * shoppingCart.get(item.getId());
             String newPrice = String.format("%.2f", totalPrice);
             priceText.setText(newPrice);
 
+            // adjusts count in the bottom row
             TextView bottomRow = layout.findViewWithTag(bottomRowTag);
             String bottomText = "\t" + count + "x " + price;
             bottomRow.setText(bottomText);
@@ -235,7 +243,8 @@ public class MainActivity extends AppCompatActivity {
     private TableLayout createTableLayout(Item item) {
         TableLayout block = new TableLayout(this);
         block.setOrientation(LinearLayout.HORIZONTAL);
-        block.setPadding(5,5,5,5);
+        block.setPadding(10,10,10,40);
+        block.setBackgroundColor(0xffffffff);
         block.setTag(item);
         block.setLongClickable(true);
 
@@ -243,6 +252,14 @@ public class MainActivity extends AppCompatActivity {
             removePosition((LinearLayout) v);
             return true;
         });
+
+        block.setOnClickListener(new DoubleClickListener() {
+            @Override
+            public void onDoubleClick(View view) {
+                removeSingleItem(view);
+            }
+        });
+
         return block;
     }
 
@@ -259,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
             double total = 0.0;
 
             for (Integer i : shoppingCart.keySet()) {
-                double price = itemList.get(i).price;
+                double price = itemList.get(i).getPrice();
                 if (shoppingCart.containsKey(i)) {
                     int countItem = shoppingCart.get(i);
                     total += countItem * price;
@@ -305,9 +322,69 @@ public class MainActivity extends AppCompatActivity {
         parent.removeView(row);
         @NotNull Item item;
         item = (Item) row.getTag();
-        Integer itemID = item.id;
+        Integer itemID = item.getId();
         shoppingCart.remove(itemID);
         adjustTotal();
+    }
+
+    /*
+    Reduces the count of an item position by one. If the position count is at 1 it removes the entire position
+     */
+    private void removeSingleItem(View box) {
+        Log.d("TEST", "DoubleClick detected!!!");
+        @NotNull Item item;
+        item = (Item) box.getTag();
+        Integer itemID = item.getId();
+        if (shoppingCart.get(itemID) > 1) {
+            Integer oldCount = shoppingCart.get(itemID);
+            int newCount = oldCount - 1;
+            double price = item.getPrice();
+            shoppingCart.put(itemID, newCount);
+            adjustTotal();
+
+            String newCountString = String.valueOf(newCount);
+            String name = item.getName();
+            String priceString = String.format("%.2f", price);
+            String topRowTag = name + "topRow";
+            String bottomRowTag = name + "bottomRow";
+
+            // adjusts the count in the top row
+            LinearLayout topRow = box.findViewWithTag(topRowTag);
+            TextView nameText = topRow.findViewWithTag("nameText");
+            String newText = newCountString + " " + name;
+            nameText.setText(newText);
+
+            // adjusts the total in the top row
+            TextView priceText = topRow.findViewWithTag("priceText");
+            double totalPrice = price * newCount;
+            String newPrice = String.format("%.2f", totalPrice);
+            priceText.setText(newPrice);
+
+            // adjusts count in the bottom row
+            TextView bottomRow = box.findViewWithTag(bottomRowTag);
+            String bottomText = "\t" + newCountString + "x " + priceString;
+            bottomRow.setText(bottomText);
+        } else {
+            removePosition((LinearLayout) box);
+        }
+    }
+
+    /*
+    Class for Double Tab implementation by geeksforgeeks https://www.geeksforgeeks.org/android/double-tap-on-a-button-in-android/
+     */
+    public abstract static class DoubleClickListener implements View.OnClickListener {
+        private long lastClickTime = 0;
+
+        @Override
+        public void onClick(View view) {
+            long clickTime = System.currentTimeMillis();
+            if (clickTime - lastClickTime < DOUBLE_CLICK_TIME_DELTA) {
+                onDoubleClick(view);
+            }
+            lastClickTime = clickTime;
+        }
+        public abstract void onDoubleClick(View view);
+        private static final long DOUBLE_CLICK_TIME_DELTA = 300;
     }
 }
 
