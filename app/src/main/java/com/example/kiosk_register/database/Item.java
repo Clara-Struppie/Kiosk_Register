@@ -20,7 +20,7 @@ public class Item {
     private int buttonNumber;
 
     public Item() {
-        name = "";
+        this.name = "";
     }
 
     public int getId() {
@@ -44,10 +44,6 @@ public class Item {
         return buttonNumber;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public void setName(@NonNull String name) {
         this.name = name;
     }
@@ -62,5 +58,9 @@ public class Item {
 
     public void setButtonNumber(int buttonNumber) {
         this.buttonNumber = buttonNumber;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

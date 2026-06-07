@@ -417,6 +417,7 @@
         android:layout_marginBottom="16dp"
         android:backgroundTint="#A90909"
         android:enabled="false"
+        android:onClick="saveSale"
         android:text="Bezahlen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

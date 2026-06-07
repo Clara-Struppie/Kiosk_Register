@@ -7,9 +7,33 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "sales")
 public class Sale {
     @PrimaryKey(autoGenerate = true)
-    public int id;
+    private int id;
     @ColumnInfo(name = "timeOfSale")
-    public long timestamp;
+    private long timestamp;
     @ColumnInfo(name = "totalPrice")
-    public double total;
+    private double total;
+
+    public int getId() {
+        return id;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
 }

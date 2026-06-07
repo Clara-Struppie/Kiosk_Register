@@ -19,6 +19,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.kiosk_register.dataInteraction.ControllerDB;
 import com.example.kiosk_register.database.Item;
+import com.example.kiosk_register.database.Sale;
+import com.example.kiosk_register.database.SoldItem;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private ControllerDB controllerDB;
     private HashMap<Integer, Item> itemList;
     private HashMap<Integer, Integer> shoppingCart;
+    private double currentTotal = 0.00;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -273,17 +276,16 @@ public class MainActivity extends AppCompatActivity {
             String totalText = "Total: 0.00 €";
             totalView.setText(totalText);
         } else {
-            double total = 0.0;
-
+            currentTotal = 0.00;
             for (Integer i : shoppingCart.keySet()) {
                 double price = itemList.get(i).getPrice();
                 if (shoppingCart.containsKey(i)) {
                     int countItem = shoppingCart.get(i);
-                    total += countItem * price;
+                    currentTotal += countItem * price;
                 }
             }
 
-            double finalTotal = total;
+            double finalTotal = currentTotal;
 
             String totalPrice = String.format("%.2f", finalTotal);
             String totalText = "Total: " + totalPrice + "€";
@@ -367,6 +369,48 @@ public class MainActivity extends AppCompatActivity {
         } else {
             removePosition((LinearLayout) box);
         }
+    }
+
+    /*
+    Sends Sale to the database to be saved, then empties shopping cart in front and backend
+     */
+    public void saveSale(View view) {
+        Sale sale = new Sale();
+        sale.setTimestamp(System.currentTimeMillis());
+        sale.setTotal(currentTotal);
+        App.DB_EXECUTOR.execute(() -> {
+            controllerDB.saveSale(sale);
+            saveSoldItems(sale);
+        });
+        /*
+        TO DO:
+        Method to empty shopping cart, empty ScrollView, set Total to 0.00
+         */
+    }
+
+    public void saveSoldItems(Sale sale) {
+        App.DB_EXECUTOR.execute(() -> {
+            int saleID = controllerDB.getRecentSaleID(sale.getTimestamp());
+            for (Integer itemID : shoppingCart.keySet()) {
+                double currentPrice = itemList.get(itemID).getPrice();
+                SoldItem soldItem = new SoldItem();
+                soldItem.setItemID(itemID);
+                soldItem.setSaleID(saleID);
+                soldItem.setQty(shoppingCart.get(itemID));
+                soldItem.setPriceAtSale(currentPrice);
+                controllerDB.saveSoldItem(soldItem);
+            }
+            runOnUiThread(() -> {
+                clearCart();
+            });
+        });
+    }
+
+    private void clearCart() {
+        shoppingCart = new HashMap<>();
+        ViewGroup layout = findViewById(R.id.cartLayout);
+        layout.removeAllViews();
+        adjustTotal();
     }
 
     /*

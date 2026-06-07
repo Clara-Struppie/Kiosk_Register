@@ -23,13 +23,53 @@ import androidx.room.PrimaryKey;
         indices = {@Index(value = {"id"})})
 public class SoldItem {
     @PrimaryKey(autoGenerate = true)
-    public int id;
+    private int id;
     @ColumnInfo(name = "itemID")
-    public int itemID;
+    private int itemID;
     @ColumnInfo(name = "saleID")
-    public int saleID;
+    private int saleID;
     @ColumnInfo(name = "quantity")
-    public int qty;
+    private int qty;
     @ColumnInfo(name = "priceAtSale")
-    public double priceAtSale;
+    private double priceAtSale;
+
+    public int getId() {
+        return id;
+    }
+
+    public int getItemID() {
+        return itemID;
+    }
+
+    public int getSaleID() {
+        return saleID;
+    }
+
+    public int getQty() {
+        return qty;
+    }
+
+    public double getPriceAtSale() {
+        return priceAtSale;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setItemID(int itemID) {
+        this.itemID = itemID;
+    }
+
+    public void setSaleID(int saleID) {
+        this.saleID = saleID;
+    }
+
+    public void setQty(int qty) {
+        this.qty = qty;
+    }
+
+    public void setPriceAtSale(double priceAtSale) {
+        this.priceAtSale = priceAtSale;
+    }
 }

@@ -14,6 +14,8 @@ public interface SaleDao {
 
     @Query("SELECT * FROM sales ORDER BY id ASC")
     List<Sale> getAllSales();
+    @Query("SELECT id FROM sales WHERE timeOfSale = :timestamp")
+    int getRecentSaleID(long timestamp);
 
     //TO DO:
     //Query for statistics
