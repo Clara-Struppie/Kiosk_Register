@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lightGray"
-    android:backgroundTint="@color/lightGray"
+    android:backgroundTint="@color/lightBeige"
     android:textAlignment="center"
     tools:context=".PaymentActivity">
 
@@ -15,17 +15,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5"/>
+        app:layout_constraintGuide_percent="0.5" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/topArea"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:padding="8dp"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/guide"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.helper.widget.Flow
             android:id="@+id/euroFlow"
@@ -42,130 +42,130 @@
             button500Euro,
             buttonCardPay"
 
-            app:flow_wrapMode="aligned"
             app:flow_maxElementsWrap="4"
+            app:flow_wrapMode="aligned"
 
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/button5Euro"
-            android:tag="5"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
+            android:backgroundTint="@color/brown"
+            android:clickable="true"
+            android:contentDescription="5 Euro"
             android:minWidth="0dp"
             android:minHeight="0dp"
+            android:onClick="setBanknoteValue"
             android:scaleType="fitCenter"
             android:src="@drawable/_5euro"
-            android:contentDescription="5 Euro"
-            android:backgroundTint="@color/lightGray"
-            android:clickable="true"
-            android:onClick="setBanknoteValue"
+            android:tag="5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/button10Euro"
-            android:tag="10"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
+            android:backgroundTint="@color/brown"
+            android:clickable="true"
+            android:contentDescription="10 Euro"
             android:minWidth="0dp"
             android:minHeight="0dp"
+            android:onClick="setBanknoteValue"
             android:scaleType="fitCenter"
             android:src="@drawable/_10euro"
-            android:contentDescription="10 Euro"
-            android:backgroundTint="@color/lightGray"
-            android:clickable="true"
-            android:onClick="setBanknoteValue"
+            android:tag="10"
             app:layout_constraintStart_toEndOf="@+id/button5Euro"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/button20Euro"
-            android:tag="20"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
+            android:backgroundTint="@color/brown"
+            android:clickable="true"
+            android:contentDescription="20 Euro"
             android:minWidth="0dp"
             android:minHeight="0dp"
+            android:onClick="setBanknoteValue"
             android:scaleType="fitCenter"
             android:src="@drawable/_20euro"
-            android:contentDescription="20 Euro"
-            android:backgroundTint="@color/lightGray"
-            android:clickable="true"
-            android:onClick="setBanknoteValue"
+            android:tag="20"
             app:layout_constraintStart_toEndOf="@+id/button10Euro"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/button50Euro"
-            android:tag="50"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
+            android:backgroundTint="@color/brown"
+            android:clickable="true"
+            android:contentDescription="50 Euro"
             android:minWidth="0dp"
             android:minHeight="0dp"
+            android:onClick="setBanknoteValue"
             android:scaleType="fitCenter"
             android:src="@drawable/_50euro"
-            android:contentDescription="50 Euro"
-            android:backgroundTint="@color/lightGray"
-            android:clickable="true"
-            android:onClick="setBanknoteValue"
+            android:tag="50"
             app:layout_constraintStart_toEndOf="@+id/button20Euro"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/button100Euro"
-            android:tag="100"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
+            android:backgroundTint="@color/brown"
+            android:clickable="true"
+            android:contentDescription="100 Euro"
             android:minWidth="0dp"
             android:minHeight="0dp"
+            android:onClick="setBanknoteValue"
             android:scaleType="fitCenter"
             android:src="@drawable/_100euro"
-            android:contentDescription="100 Euro"
-            android:backgroundTint="@color/lightGray"
-            android:clickable="true"
-            android:onClick="setBanknoteValue"
+            android:tag="100"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button5Euro" />
 
         <ImageButton
             android:id="@+id/button200Euro"
-            android:tag="200"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
+            android:backgroundTint="@color/brown"
+            android:clickable="true"
+            android:contentDescription="200 Euro"
             android:minWidth="0dp"
             android:minHeight="0dp"
+            android:onClick="setBanknoteValue"
             android:scaleType="fitCenter"
             android:src="@drawable/_200euro"
-            android:contentDescription="200 Euro"
-            android:backgroundTint="@color/lightGray"
-            android:clickable="true"
-            android:onClick="setBanknoteValue"
+            android:tag="200"
             app:layout_constraintStart_toEndOf="@+id/button100Euro"
             app:layout_constraintTop_toBottomOf="@+id/button10Euro" />
 
         <ImageButton
             android:id="@+id/button500Euro"
-            android:tag="500"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
+            android:backgroundTint="@color/brown"
+            android:clickable="true"
+            android:contentDescription="500 Euro"
             android:minWidth="0dp"
             android:minHeight="0dp"
+            android:onClick="setBanknoteValue"
             android:scaleType="fitCenter"
             android:src="@drawable/_500euro"
-            android:contentDescription="500 Euro"
-            android:backgroundTint="@color/lightGray"
-            android:clickable="true"
-            android:onClick="setBanknoteValue"
+            android:tag="500"
             app:layout_constraintStart_toEndOf="@+id/button200Euro"
             app:layout_constraintTop_toBottomOf="@+id/button20Euro" />
 
@@ -174,7 +174,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
-            android:backgroundTint="@color/lightGray"
+            android:backgroundTint="@color/brown"
             android:clickable="true"
             android:contentDescription="Passend oder mit Karte gezahlt"
             android:minWidth="0dp"
@@ -193,29 +193,29 @@
         android:layout_height="0dp"
         android:padding="8dp"
 
-        app:layout_constraintTop_toBottomOf="@id/guide"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/guide">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/bottomGuide"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5"/>
+            app:layout_constraintGuide_percent="0.5" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/numpadGrid"
             android:layout_width="0dp"
             android:layout_height="0dp"
 
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/bottomGuide"
+            app:layout_constraintHorizontal_weight="1.4"
+            app:layout_constraintStart_toStartOf="parent"
 
-            app:layout_constraintHorizontal_weight="1.4">
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.helper.widget.Flow
                 android:id="@+id/numpadFlow"
@@ -248,100 +248,109 @@
 
             <Button
                 android:id="@+id/buttonNP7"
-                android:tag="7"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:backgroundTint="@color/lightBlue"
+                android:onClick="increasePaidAmount"
+                android:tag="7"
                 android:text="7"
                 android:textSize="34sp"
-                android:onClick="increasePaidAmount"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/buttonNP4" />
 
             <Button
                 android:id="@+id/buttonNP8"
-                android:tag="8"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:backgroundTint="@color/lightBlue"
+                android:onClick="increasePaidAmount"
+                android:tag="8"
                 android:text="8"
                 android:textSize="34sp"
-                android:onClick="increasePaidAmount"
                 app:layout_constraintStart_toEndOf="@+id/buttonNP7"
                 app:layout_constraintTop_toBottomOf="@+id/buttonNP5" />
 
             <Button
                 android:id="@+id/buttonNP9"
-                android:tag="9"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:backgroundTint="@color/lightBlue"
+                android:onClick="increasePaidAmount"
+                android:tag="9"
                 android:text="9"
                 android:textSize="34sp"
-                android:onClick="increasePaidAmount"
                 app:layout_constraintStart_toEndOf="@+id/buttonNP8"
                 app:layout_constraintTop_toBottomOf="@+id/buttonNP6" />
 
             <Button
                 android:id="@+id/buttonNP4"
-                android:tag="4"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:backgroundTint="@color/lightBlue"
+                android:onClick="increasePaidAmount"
+                android:tag="4"
                 android:text="4"
                 android:textSize="34sp"
-                android:onClick="increasePaidAmount"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/buttonNP1" />
 
             <Button
                 android:id="@+id/buttonNP5"
-                android:tag="5"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:backgroundTint="@color/lightBlue"
+                android:onClick="increasePaidAmount"
+                android:tag="5"
                 android:text="5"
                 android:textSize="34sp"
-                android:onClick="increasePaidAmount"
                 app:layout_constraintStart_toEndOf="@+id/buttonNP4"
                 app:layout_constraintTop_toBottomOf="@+id/buttonNP2" />
 
             <Button
                 android:id="@+id/buttonNP6"
-                android:tag="6"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:backgroundTint="@color/lightBlue"
+                android:onClick="increasePaidAmount"
+                android:tag="6"
                 android:text="6"
                 android:textSize="34sp"
-                android:onClick="increasePaidAmount"
                 app:layout_constraintStart_toEndOf="@+id/buttonNP5"
                 app:layout_constraintTop_toBottomOf="@+id/buttonNP3" />
 
             <Button
                 android:id="@+id/buttonNP1"
-                android:tag="1"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:backgroundTint="@color/lightBlue"
+                android:onClick="increasePaidAmount"
+                android:tag="1"
                 android:text="1"
                 android:textSize="34sp"
-                android:onClick="increasePaidAmount"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/buttonNP2"
-                android:tag="2"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:backgroundTint="@color/lightBlue"
+                android:onClick="increasePaidAmount"
+                android:tag="2"
                 android:text="2"
                 android:textSize="34sp"
-                android:onClick="increasePaidAmount"
                 app:layout_constraintStart_toEndOf="@+id/buttonNP1"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/buttonNP3"
-                android:tag="3"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:backgroundTint="@color/lightBlue"
+                android:onClick="increasePaidAmount"
+                android:tag="3"
                 android:text="3"
                 android:textSize="34sp"
-                android:onClick="increasePaidAmount"
                 app:layout_constraintStart_toEndOf="@+id/buttonNP2"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -349,20 +358,22 @@
                 android:id="@+id/buttonNPcomma"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:backgroundTint="@color/darkBlue"
+                android:onClick="setDecimalToTrue"
                 android:text=","
                 android:textSize="34sp"
-                android:onClick="setDecimalToTrue"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/buttonNP7" />
 
             <Button
                 android:id="@+id/buttonNP0"
-                android:tag="0"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:backgroundTint="@color/lightBlue"
+                android:onClick="increasePaidAmount"
+                android:tag="0"
                 android:text="0"
                 android:textSize="34sp"
-                android:onClick="increasePaidAmount"
                 app:layout_constraintStart_toEndOf="@+id/buttonNPcomma"
                 app:layout_constraintTop_toBottomOf="@+id/buttonNP8" />
 
@@ -370,9 +381,10 @@
                 android:id="@+id/buttonNPdelete"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:backgroundTint="@color/darkBlue"
+                android:onClick="resetPaidAmount"
                 android:text="Löschen"
                 android:textSize="18sp"
-                android:onClick="resetPaidAmount"
                 app:layout_constraintStart_toEndOf="@+id/buttonNP0"
                 app:layout_constraintTop_toBottomOf="@+id/buttonNP9" />
 
@@ -383,14 +395,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.75"/>
+            app:layout_constraintGuide_percent="0.75" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/payButtonGuide"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.80"/>
+            app:layout_constraintGuide_percent="0.80" />
 
         <LinearLayout
             android:id="@+id/overviewPanelLeft"
@@ -447,6 +459,8 @@
                 android:layout_weight="1"
                 android:text="0.00 €"
                 android:textAlignment="viewEnd"
+                android:textColor="#000000"
+                android:textColorLink="#000000"
                 android:textSize="34sp" />
 
             <TextView
@@ -456,6 +470,7 @@
                 android:layout_weight="1"
                 android:text="0.00 €"
                 android:textAlignment="viewEnd"
+                android:textColor="#000000"
                 android:textSize="34sp" />
 
             <TextView
@@ -465,6 +480,7 @@
                 android:layout_weight="1"
                 android:text="0.00 €"
                 android:textAlignment="viewEnd"
+                android:textColor="#000000"
                 android:textSize="34sp" />
 
         </LinearLayout>
@@ -476,7 +492,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:layout_weight="0.5"
-            android:backgroundTint="#A90909"
+            android:backgroundTint="@color/biedermeierRed"
             android:enabled="false"
             android:onClick="finishPayment"
             android:text="Kauf abschließen"

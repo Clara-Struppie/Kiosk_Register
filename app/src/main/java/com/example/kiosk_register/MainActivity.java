@@ -1,6 +1,7 @@
 package com.example.kiosk_register;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -201,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
             bottomRow.setText(bottomText);
 
             TableLayout block = createTableLayout(item);
+            block.setBackgroundColor(Color.parseColor("#FFF4F4"));
             block.addView(topRow);
             block.addView(bottomRow);
 
