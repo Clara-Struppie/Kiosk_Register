@@ -52,6 +52,7 @@
 
         <ImageButton
             android:id="@+id/button5Euro"
+            android:tag="5"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
@@ -61,11 +62,14 @@
             android:src="@drawable/_5euro"
             android:contentDescription="5 Euro"
             android:backgroundTint="@color/lightGray"
+            android:clickable="true"
+            android:onClick="setBanknoteValue"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/button10Euro"
+            android:tag="10"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
@@ -75,11 +79,14 @@
             android:src="@drawable/_10euro"
             android:contentDescription="10 Euro"
             android:backgroundTint="@color/lightGray"
+            android:clickable="true"
+            android:onClick="setBanknoteValue"
             app:layout_constraintStart_toEndOf="@+id/button5Euro"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/button20Euro"
+            android:tag="20"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
@@ -89,11 +96,14 @@
             android:src="@drawable/_20euro"
             android:contentDescription="20 Euro"
             android:backgroundTint="@color/lightGray"
+            android:clickable="true"
+            android:onClick="setBanknoteValue"
             app:layout_constraintStart_toEndOf="@+id/button10Euro"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/button50Euro"
+            android:tag="50"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
@@ -103,11 +113,14 @@
             android:src="@drawable/_50euro"
             android:contentDescription="50 Euro"
             android:backgroundTint="@color/lightGray"
+            android:clickable="true"
+            android:onClick="setBanknoteValue"
             app:layout_constraintStart_toEndOf="@+id/button20Euro"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/button100Euro"
+            android:tag="100"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
@@ -117,11 +130,14 @@
             android:src="@drawable/_100euro"
             android:contentDescription="100 Euro"
             android:backgroundTint="@color/lightGray"
+            android:clickable="true"
+            android:onClick="setBanknoteValue"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button5Euro" />
 
         <ImageButton
             android:id="@+id/button200Euro"
+            android:tag="200"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
@@ -131,11 +147,14 @@
             android:src="@drawable/_200euro"
             android:contentDescription="200 Euro"
             android:backgroundTint="@color/lightGray"
+            android:clickable="true"
+            android:onClick="setBanknoteValue"
             app:layout_constraintStart_toEndOf="@+id/button100Euro"
             app:layout_constraintTop_toBottomOf="@+id/button10Euro" />
 
         <ImageButton
             android:id="@+id/button500Euro"
+            android:tag="500"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
@@ -145,6 +164,8 @@
             android:src="@drawable/_500euro"
             android:contentDescription="500 Euro"
             android:backgroundTint="@color/lightGray"
+            android:clickable="true"
+            android:onClick="setBanknoteValue"
             app:layout_constraintStart_toEndOf="@+id/button200Euro"
             app:layout_constraintTop_toBottomOf="@+id/button20Euro" />
 
@@ -153,12 +174,14 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
+            android:backgroundTint="@color/lightGray"
+            android:clickable="true"
+            android:contentDescription="Passend oder mit Karte gezahlt"
             android:minWidth="0dp"
             android:minHeight="0dp"
+            android:onClick="exactPayment"
             android:scaleType="fitCenter"
             android:src="@drawable/_5euro"
-            android:backgroundTint="@color/lightGray"
-            android:contentDescription="Passend oder mit Karte gezahlt"
             app:layout_constraintStart_toEndOf="@+id/button500Euro"
             app:layout_constraintTop_toBottomOf="@+id/button50Euro" />
 
@@ -225,6 +248,7 @@
 
             <Button
                 android:id="@+id/buttonNP7"
+                android:tag="7"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:text="7"
@@ -234,6 +258,7 @@
 
             <Button
                 android:id="@+id/buttonNP8"
+                android:tag="8"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:text="8"
@@ -243,6 +268,7 @@
 
             <Button
                 android:id="@+id/buttonNP9"
+                android:tag="9"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:text="9"
@@ -252,6 +278,7 @@
 
             <Button
                 android:id="@+id/buttonNP4"
+                android:tag="4"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:text="4"
@@ -261,6 +288,7 @@
 
             <Button
                 android:id="@+id/buttonNP5"
+                android:tag="5"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:text="5"
@@ -270,6 +298,7 @@
 
             <Button
                 android:id="@+id/buttonNP6"
+                android:tag="6"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:text="6"
@@ -279,6 +308,7 @@
 
             <Button
                 android:id="@+id/buttonNP1"
+                android:tag="1"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:text="1"
@@ -288,6 +318,7 @@
 
             <Button
                 android:id="@+id/buttonNP2"
+                android:tag="2"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:text="2"
@@ -297,6 +328,7 @@
 
             <Button
                 android:id="@+id/buttonNP3"
+                android:tag="3"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:text="3"
@@ -315,6 +347,7 @@
 
             <Button
                 android:id="@+id/buttonNP0"
+                android:tag="0"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:text="0"
@@ -333,41 +366,112 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/overviewGuide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.75"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/payButtonGuide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.80"/>
+
         <LinearLayout
-            android:id="@+id/overviewPanel"
+            android:id="@+id/overviewPanelLeft"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:orientation="vertical"
+            android:layout_marginLeft="8dp"
 
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/payButtonGuide"
+            app:layout_constraintEnd_toStartOf="@+id/overviewGuide"
+            app:layout_constraintStart_toEndOf="@id/numpadGrid"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/total_text"
+                android:textSize="34sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/paid_text"
+                android:textSize="34sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/change_text"
+                android:textSize="34sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/overviewPanelRight"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/payButtonGuide"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/numpadGrid">
+            app:layout_constraintStart_toStartOf="@+id/overviewGuide"
+            app:layout_constraintTop_toTopOf="parent">
+
 
             <TextView
                 android:id="@+id/textTotal"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="Gesamt"
-                android:textSize="34sp"/>
+                android:text="0.00 €"
+                android:textAlignment="viewEnd"
+                android:textSize="34sp" />
 
             <TextView
                 android:id="@+id/textPaid"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="Bezahlt"
-                android:textSize="34sp"/>
+                android:text="0.00 €"
+                android:textAlignment="viewEnd"
+                android:textSize="34sp" />
 
             <TextView
                 android:id="@+id/textChange"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1.3"
-                android:text="Rückgeld"
-                android:textSize="34sp"/>
+                android:layout_weight="1"
+                android:text="0.00 €"
+                android:textAlignment="viewEnd"
+                android:textSize="34sp" />
+
         </LinearLayout>
+
+        <Button
+            android:id="@+id/completionButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="0.5"
+            android:backgroundTint="#A90909"
+            android:enabled="false"
+            android:onClick="finishPayment"
+            android:text="Kauf abschließen"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/bottomGuide"
+            app:layout_constraintTop_toTopOf="@+id/payButtonGuide" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

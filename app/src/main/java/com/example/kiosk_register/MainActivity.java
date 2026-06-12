@@ -1,5 +1,6 @@
 package com.example.kiosk_register;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -403,6 +404,7 @@ public class MainActivity extends AppCompatActivity {
                 controllerDB.saveSoldItem(soldItem);
             }
             runOnUiThread(() -> {
+                startPaymentScreen();
                 clearCart();
                 adjustTotal();
             });
@@ -413,6 +415,12 @@ public class MainActivity extends AppCompatActivity {
         shoppingCart = new HashMap<>();
         ViewGroup layout = findViewById(R.id.cartLayout);
         layout.removeAllViews();
+    }
+
+    private void startPaymentScreen() {
+        Intent intent = new Intent(MainActivity.this, PaymentActivity.class);
+        intent.putExtra("totalKey", currentTotal);
+        MainActivity.this.startActivity(intent);
     }
 
     /*
