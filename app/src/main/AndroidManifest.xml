@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Kiosk_Register">
         <activity
+            android:name=".MainActivity2"
+            android:exported="false" />
+        <activity
             android:name=".PayActivity"
             android:exported="false" />
         <activity

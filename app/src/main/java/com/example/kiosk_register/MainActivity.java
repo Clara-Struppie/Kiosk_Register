@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.helper.widget.Flow;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -21,6 +22,7 @@ import com.example.kiosk_register.dataInteraction.ControllerDB;
 import com.example.kiosk_register.database.Item;
 import com.example.kiosk_register.database.Sale;
 import com.example.kiosk_register.database.SoldItem;
+import com.google.android.material.internal.FlowLayout;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -83,12 +85,12 @@ public class MainActivity extends AppCompatActivity {
      */
     private void initiateButtons() {
         // get a List of all Buttons in the Grid to avoid using getIdentifier
-        ViewGroup grid = findViewById(R.id.buttonGrid);
+        Flow grid = findViewById(R.id.buttonGrid);
 
         List<Button> buttons = new ArrayList<>();
 
-        for (int i = 0; i < grid.getChildCount(); i++) {
-            buttons.add((Button) grid.getChildAt(i));
+        for (int i: grid.getReferencedIds()) {
+            buttons.add(findViewById(i));
         }
         // set the text of all buttons according to the database entry
         for (Integer i: itemList.keySet()) {
