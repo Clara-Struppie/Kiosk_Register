@@ -402,6 +402,7 @@ public class MainActivity extends AppCompatActivity {
             }
             runOnUiThread(() -> {
                 clearCart();
+                adjustTotal();
             });
         });
     }
@@ -410,7 +411,6 @@ public class MainActivity extends AppCompatActivity {
         shoppingCart = new HashMap<>();
         ViewGroup layout = findViewById(R.id.cartLayout);
         layout.removeAllViews();
-        adjustTotal();
     }
 
     /*
