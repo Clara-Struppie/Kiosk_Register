@@ -12,11 +12,14 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.math.BigDecimal;
+
 public class PaymentActivity extends AppCompatActivity {
     private double totalPrice = 0.0;
     private double pricePaid = 0.0;
+    String decimalString = "";
     private double changeDue = 0.0;
-    private boolean commaActivated = false;
+    private boolean decimalActivated = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,22 +89,68 @@ public class PaymentActivity extends AppCompatActivity {
     }
 
     /*
-    Change calculation
+    Change calculation followed by automatical display adjustment
      */
     private void calculateChange() {
         changeDue = pricePaid - totalPrice;
         adjustPaymentDisplay();
-        checkPaymentAmount();
+        checkForMatchingPayment();
     }
 
     /*
     Checks if the paid amount is enough so the transaction can be completed
      */
-    private void checkPaymentAmount() {
+    private void checkForMatchingPayment() {
         Button payButton = findViewById(R.id.completionButton);
         payButton.setEnabled(pricePaid >= totalPrice);
     }
 
+    /*
+    Increases the paid amount according to the typed numbers of the numpad.
+    If decimal state is set to true, increases the decimal numbers
+     */
+    public void increasePaidAmount(View view) {
+        String valueString = view.getTag().toString();
+
+        if (decimalActivated) {
+            boolean hasTwoDecimalPoints = checkDecimalLength(decimalString);
+            if (hasTwoDecimalPoints) {
+                return;
+            }
+        }
+        decimalString += valueString;
+        pricePaid = Double.parseDouble(decimalString);
+        calculateChange();
+    }
+
+    /*
+    Checks if there are two or more numbers after the decimal point
+     */
+    private boolean checkDecimalLength(String decimalString) {
+        return decimalString.length() - decimalString.indexOf('.') >= 3;
+    }
+
+    /*
+    resets the current calculation of payment
+     */
+    public void resetPaidAmount(View view) {
+        pricePaid = 0.0;
+        decimalString = "";
+        decimalActivated = false;
+        calculateChange();
+    }
+
+    /*
+    sets the decimal activation to true so post decimal point values can be typed in
+     */
+    public void setDecimalToTrue(View view) {
+        decimalActivated = true;
+        decimalString += ".";
+    }
+
+    /*
+    Finishes this activity after the transaction has been made
+     */
     public void finishPayment(View view) {
         finish();
     }
