@@ -202,7 +202,6 @@ public class MainActivity extends AppCompatActivity {
             bottomRow.setText(bottomText);
 
             TableLayout block = createTableLayout(item);
-            block.setBackgroundColor(Color.parseColor("#FFF4F4"));
             block.addView(topRow);
             block.addView(bottomRow);
 
@@ -420,6 +419,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startPaymentScreen() {
+        toggle(findViewById(R.id.payButton));
         Intent intent = new Intent(MainActivity.this, PaymentActivity.class);
         intent.putExtra("totalKey", currentTotal);
         MainActivity.this.startActivity(intent);
