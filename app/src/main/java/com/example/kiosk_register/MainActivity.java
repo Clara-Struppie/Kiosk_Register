@@ -202,6 +202,8 @@ public class MainActivity extends AppCompatActivity {
             bottomRow.setText(bottomText);
 
             TableLayout block = createTableLayout(item);
+            block.setBackground(getDrawable(R.drawable.single_position_bg));
+            block.setElevation(1.0f);
             block.addView(topRow);
             block.addView(bottomRow);
 
