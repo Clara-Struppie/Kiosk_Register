@@ -84,7 +84,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/buttonColor"
-            android:onClick="addToCart"
             android:text=""
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -94,7 +93,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/buttonColor"
-            android:onClick="addToCart"
             android:text="" />
 
         <Button
@@ -102,7 +100,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/buttonColor"
-            android:onClick="addToCart"
             android:text="" />
 
         <Button
@@ -110,7 +107,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/buttonColor"
-            android:onClick="addToCart"
             android:text="" />
 
         <Button
@@ -118,7 +114,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/buttonColor"
-            android:onClick="addToCart"
             android:text="" />
 
         <Button
@@ -126,7 +121,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/buttonColor"
-            android:onClick="addToCart"
             android:text="" />
 
         <Button
@@ -134,7 +128,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/buttonColor"
-            android:onClick="addToCart"
             android:text="" />
 
         <Button
@@ -142,7 +135,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/buttonColor"
-            android:onClick="addToCart"
             android:text="" />
 
         <Button
@@ -150,7 +142,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/buttonColor"
-            android:onClick="addToCart"
             android:text="" />
 
         <Button
@@ -158,7 +149,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/buttonColor"
-            android:onClick="addToCart"
             android:text="" />
 
         <Button
@@ -166,7 +156,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/buttonColor"
-            android:onClick="addToCart"
             android:text="" />
 
         <Button
@@ -174,7 +163,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/buttonColor"
-            android:onClick="addToCart"
             android:text="" />
 
         <Button
@@ -182,7 +170,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/buttonColor"
-            android:onClick="addToCart"
             android:text="" />
 
         <Button
@@ -190,7 +177,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/buttonColor"
-            android:onClick="addToCart"
             android:text="" />
 
         <Button
@@ -198,7 +184,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/buttonColor"
-            android:onClick="addToCart"
             android:text="" />
 
         <Button
@@ -206,7 +191,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/buttonColor"
-            android:onClick="addToCart"
             android:text="" />
 
         <Button
@@ -214,7 +198,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/buttonColor"
-            android:onClick="addToCart"
             android:text="" />
 
         <Button
@@ -222,7 +205,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/buttonColor"
-            android:onClick="addToCart"
             android:text="" />
 
         <Button
@@ -230,7 +212,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/buttonColor"
-            android:onClick="addToCart"
             android:text="" />
 
         <Button
@@ -238,7 +219,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/buttonColor"
-            android:onClick="addToCart"
             android:text="" />
 
         <Button
@@ -246,7 +226,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/buttonColor"
-            android:onClick="addToCart"
             android:text="" />
 
         <Button
@@ -254,7 +233,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/buttonColor"
-            android:onClick="addToCart"
             android:text="" />
 
         <Button
@@ -262,7 +240,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/buttonColor"
-            android:onClick="addToCart"
             android:text="" />
 
         <Button
@@ -270,7 +247,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/buttonColor"
-            android:onClick="addToCart"
             android:text="" />
 
         <Button
@@ -278,7 +254,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/buttonColor"
-            android:onClick="addToCart"
             android:text="" />
 
         <Button
@@ -286,7 +261,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/buttonColor"
-            android:onClick="addToCart"
             android:text="" />
 
         <Button
@@ -294,7 +268,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/buttonColor"
-            android:onClick="addToCart"
             android:text="" />
 
         <Button
@@ -302,7 +275,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/buttonColor"
-            android:onClick="addToCart"
             android:text="" />
 
         <Button
@@ -310,7 +282,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/buttonColor"
-            android:onClick="addToCart"
             android:text="" />
 
         <Button
@@ -318,7 +289,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/buttonColor"
-            android:onClick="addToCart"
             android:text="" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -392,5 +362,18 @@
         app:layout_constraintStart_toStartOf="@+id/verticalGuide"
         app:layout_constraintTop_toBottomOf="@id/payButtonGuide"
         app:layout_constraintVertical_bias="0.0" />
+
+    <ToggleButton
+        android:id="@+id/editLayoutToggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:onClick="toggleEditMode"
+        android:text="Bearbeiten"
+        android:textOff="Bearbeiten"
+        android:textOn="Bearbeiten"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private HashMap<Integer, Item> itemList;
     private HashMap<Integer, Integer> shoppingCart;
     private double currentTotal = 0.00;
+    private List<Button> emptyButtonList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +115,12 @@ public class MainActivity extends AppCompatActivity {
                     price + "€";
             button.setText(buttonText);
             button.setTag(itemList.get(i));
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addToCart(v);
+                }
+            });
         }
         // next disable all unused buttons
         disableEmptyButtons(buttons);
@@ -129,8 +137,10 @@ public class MainActivity extends AppCompatActivity {
     Buttons without text are being disabled to be unusable
      */
     private void disableEmptyButtons(@NonNull List<Button> buttons) {
+        emptyButtonList = new ArrayList<>();
         for (Button button: buttons) {
             if(button.getText().equals("")) {
+                emptyButtonList.add(button);
                 toggle(button);
             }
         }
@@ -442,6 +452,18 @@ public class MainActivity extends AppCompatActivity {
         }
         public abstract void onDoubleClick(View view);
         private static final long DOUBLE_CLICK_TIME_DELTA = 300;
+    }
+
+    public void toggleEditMode(View view) {
+        ToggleButton toggle = (ToggleButton) view;
+        for (Button button: emptyButtonList) {
+            toggle(button);
+        }
+        if (toggle.isChecked()) {
+            toggle.setBackgroundColor(0x00000000);
+        } else {
+            toggle.setBackgroundColor(0xffffffff);
+        }
     }
 }
 
