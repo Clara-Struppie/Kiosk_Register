@@ -64,6 +64,7 @@
             android:scaleType="fitCenter"
             android:src="@drawable/_5euro"
             android:tag="5"
+            android:elevation="3dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -81,6 +82,7 @@
             android:scaleType="fitCenter"
             android:src="@drawable/_10euro"
             android:tag="10"
+            android:elevation="3dp"
             app:layout_constraintStart_toEndOf="@+id/button5Euro"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -98,6 +100,7 @@
             android:scaleType="fitCenter"
             android:src="@drawable/_20euro"
             android:tag="20"
+            android:elevation="3dp"
             app:layout_constraintStart_toEndOf="@+id/button10Euro"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -115,6 +118,7 @@
             android:scaleType="fitCenter"
             android:src="@drawable/_50euro"
             android:tag="50"
+            android:elevation="3dp"
             app:layout_constraintStart_toEndOf="@+id/button20Euro"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -132,6 +136,7 @@
             android:scaleType="fitCenter"
             android:src="@drawable/_100euro"
             android:tag="100"
+            android:elevation="3dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button5Euro" />
 
@@ -149,6 +154,7 @@
             android:scaleType="fitCenter"
             android:src="@drawable/_200euro"
             android:tag="200"
+            android:elevation="3dp"
             app:layout_constraintStart_toEndOf="@+id/button100Euro"
             app:layout_constraintTop_toBottomOf="@+id/button10Euro" />
 
@@ -166,6 +172,7 @@
             android:scaleType="fitCenter"
             android:src="@drawable/_500euro"
             android:tag="500"
+            android:elevation="3dp"
             app:layout_constraintStart_toEndOf="@+id/button200Euro"
             app:layout_constraintTop_toBottomOf="@+id/button20Euro" />
 
@@ -182,6 +189,7 @@
             android:onClick="exactPayment"
             android:scaleType="fitCenter"
             android:src="@drawable/_card"
+            android:elevation="3dp"
             app:layout_constraintStart_toEndOf="@+id/button500Euro"
             app:layout_constraintTop_toBottomOf="@+id/button50Euro" />
 
