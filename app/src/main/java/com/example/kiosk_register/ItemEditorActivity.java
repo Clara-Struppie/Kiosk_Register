@@ -19,7 +19,6 @@ public class ItemEditorActivity extends AppCompatActivity {
 
     private EditText nameEditText;
     private EditText priceEditText;
-    private TextView buttonNumberText;
 
     private int buttonNumber;
     private int itemID = -1;
@@ -33,7 +32,6 @@ public class ItemEditorActivity extends AppCompatActivity {
 
         nameEditText = findViewById(R.id.nameEditText);
         priceEditText = findViewById(R.id.priceEditText);
-        buttonNumberText = findViewById(R.id.buttonNumberText);
 
         Intent intent = getIntent();
 
