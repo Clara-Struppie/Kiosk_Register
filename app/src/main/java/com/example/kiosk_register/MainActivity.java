@@ -2,6 +2,7 @@ package com.example.kiosk_register;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -39,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private HashMap<Integer, Integer> shoppingCart;
     private double currentTotal = 0.00;
     private List<Button> emptyButtonList;
+    private List<Button> allButtons;
+    private Boolean editMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,59 +94,99 @@ public class MainActivity extends AppCompatActivity {
         // get a List of all Buttons in the Grid to avoid using getIdentifier
         Flow grid = findViewById(R.id.buttonGrid);
 
-        List<Button> buttons = new ArrayList<>();
+        allButtons = new ArrayList<>();
 
-        for (int i: grid.getReferencedIds()) {
-            buttons.add(findViewById(i));
+        for (int id: grid.getReferencedIds()) {
+            Button button = findViewById(id);
+            allButtons.add(button);
+        }
+
+        refreshButtons();
+
+        setSaleMode();
+    }
+
+    private void refreshButtons() {
+        for (int i = 0; i < allButtons.size(); i++) {
+            Button button = allButtons.get(i);
+
+            button.setText("");
+            button.setTag(null);
+            button.setEnabled(true);
+            button.setOnClickListener(null);
         }
         // set the text of all buttons according to the database entry
-        for (Integer i: itemList.keySet()) {
-            int buttonNumber = itemList.get(i).getButtonNumber() - 1;
+        for (Item item : itemList.values()) {
+            int index = item.getButtonNumber() - 1;
 
             // in case we somehow have a faulty index in our database get rid of that here
-            if (buttonNumber < 0 || buttonNumber >= buttons.size()) {
-                Log.e("Kiosk_Register", "Ungültiger Datenbereich für ButtonNumber: " + buttonNumber);
+            if (index < 0 || index >= allButtons.size()) {
+                Log.e("Kiosk_Register", "Ungültiger Datenbereich für ButtonNumber: " + index);
                 continue;
             }
-            Button button = buttons.get(buttonNumber);
 
-            String price = String.format("%.2f", itemList.get(i).getPrice());
-            String buttonText = itemList.get(i).getName() +
+            Button button = allButtons.get(index);
+
+            String price = String.format("%.2f", item.getPrice());
+            String buttonText = item.getName() +
                     System.lineSeparator() +
                     System.lineSeparator() +
                     System.lineSeparator() +
                     price + "€";
             button.setText(buttonText);
-            button.setTag(itemList.get(i));
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    addToCart(v);
-                }
-            });
+            button.setTag(item);
         }
-        // next disable all unused buttons
-        disableEmptyButtons(buttons);
+
+        if (editMode) {
+            setEditMode();
+        } else {
+            setSaleMode();
+        }
     }
+
+    private void setSaleMode() {
+        editMode = false;
+
+        for (Button button : allButtons) {
+            Item item = (Item) button.getTag();
+
+            if (item == null) {
+                //Case of an unused button
+                button.setEnabled(false);
+                button.setOnClickListener(null);
+            } else {
+                //Case of an used button with item
+                button.setEnabled(true);
+                button.setOnClickListener(this::addToCart);
+            }
+        }
+    }
+
+    private void setEditMode() {
+        editMode = true;
+
+        for (Button button : allButtons) {
+            button.setEnabled(true);
+
+            Item item = (Item) button.getTag();
+
+            if (item == null) {
+                // if button is empty, this leads to creating a new Item
+                button.setOnClickListener(v -> openItemEditor(button, null));
+            } else {
+                // button is used, leads to editing the item
+                button.setOnClickListener(v -> openItemEditor(button, item));
+            }
+        }
+    }
+
+
 
     /*
     Inverts a button's enabled state
      */
     private void toggle(@NonNull View v) {
         v.setEnabled(!v.isEnabled());
-    }
-
-    /*
-    Buttons without text are being disabled to be unusable
-     */
-    private void disableEmptyButtons(@NonNull List<Button> buttons) {
-        emptyButtonList = new ArrayList<>();
-        for (Button button: buttons) {
-            if(button.getText().equals("")) {
-                emptyButtonList.add(button);
-                toggle(button);
-            }
-        }
     }
 
     /*
@@ -325,8 +368,10 @@ public class MainActivity extends AppCompatActivity {
      */
     private void activatePayment() {
         View payButton = findViewById(R.id.payButton);
+        View changeButton = findViewById(R.id.changeButton);
         if (!payButton.isEnabled()) {
             toggle(payButton);
+            toggle(changeButton);
         }
     }
 
@@ -397,10 +442,6 @@ public class MainActivity extends AppCompatActivity {
             controllerDB.saveSale(sale);
             saveSoldItems(sale);
         });
-        /*
-        TO DO:
-        Method to empty shopping cart, empty ScrollView, set Total to 0.00
-         */
     }
 
     public void saveSoldItems(Sale sale) {
@@ -416,7 +457,8 @@ public class MainActivity extends AppCompatActivity {
                 controllerDB.saveSoldItem(soldItem);
             }
             runOnUiThread(() -> {
-                startPaymentScreen();
+                toggle(findViewById(R.id.payButton));
+                toggle(findViewById(R.id.changeButton));
                 clearCart();
                 adjustTotal();
             });
@@ -430,10 +472,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startPaymentScreen() {
-        toggle(findViewById(R.id.payButton));
         Intent intent = new Intent(MainActivity.this, PaymentActivity.class);
         intent.putExtra("totalKey", currentTotal);
         MainActivity.this.startActivity(intent);
+    }
+
+    public void openChangeMenu(View view) {
+        saveSale(view);
+        startPaymentScreen();
+        clearCart();
+        adjustTotal();
     }
 
     /*
@@ -455,14 +503,51 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void toggleEditMode(View view) {
-        ToggleButton toggle = (ToggleButton) view;
-        for (Button button: emptyButtonList) {
-            toggle(button);
-        }
-        if (toggle.isChecked()) {
-            toggle.setBackgroundColor(0x00000000);
+        ToggleButton toggleButton = (ToggleButton) view;
+
+        if (toggleButton.isChecked()) {
+            setEditMode();
         } else {
-            toggle.setBackgroundColor(0xffffffff);
+            setSaleMode();
+        }
+
+    }
+
+    // Open the editor for items
+    private void openItemEditor(Button button, Item item) {
+        int buttonNumber = getButtonNumber(button);
+
+        Intent intent = new Intent(MainActivity.this, ItemEditorActivity.class);
+        intent.putExtra(ItemEditorActivity.EXTRA_BUTTON_NUMBER, buttonNumber);
+
+        if (item != null) {
+            intent.putExtra(ItemEditorActivity.EXTRA_ITEM_ID, item.getId());
+        }
+
+        startActivityForResult(intent, 100);
+    }
+
+    // Used to turn the button Number into an usable int
+    private int getButtonNumber(Button button) {
+        String idName = getResources().getResourceEntryName(button.getId());
+        return Integer.parseInt(idName.substring("button".length()));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100 && resultCode == RESULT_OK) {
+            App.DB_EXECUTOR.execute(() -> {
+                itemList = createItemList();
+
+                runOnUiThread(() -> {
+                    refreshButtons();
+
+                    ToggleButton toggle = findViewById(R.id.editLayoutToggleButton);
+                    toggle.setChecked(false);
+                    setSaleMode();
+                });
+            });
         }
     }
 }

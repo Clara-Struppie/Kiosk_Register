@@ -298,7 +298,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8" />
+        app:layout_constraintGuide_percent="0.7" />
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -326,6 +326,12 @@
 
         </LinearLayout>
     </ScrollView>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/changeButtonGuide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/payButtonGuide"
@@ -341,7 +347,7 @@
         android:layout_marginRight="8dp"
         android:text=""
         app:autoSizeTextType="uniform"
-        app:layout_constraintBottom_toTopOf="@id/payButtonGuide"
+        app:layout_constraintBottom_toTopOf="@+id/changeButtonGuide"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/verticalGuide"
         app:layout_constraintTop_toBottomOf="@+id/scrollView" />
@@ -371,9 +377,44 @@
         android:layout_marginTop="16dp"
         android:onClick="toggleEditMode"
         android:text="Bearbeiten"
-        android:textOff="Bearbeiten"
-        android:textOn="Bearbeiten"
+        android:textOff="Verkaufsmodus"
+        android:textOn="Bearbeitungsmodus"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/changeButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="@color/lightBlue"
+        android:enabled="false"
+        android:onClick="openChangeMenu"
+        android:text="Rückgeld"
+        app:layout_constraintBottom_toTopOf="@+id/payButtonGuide"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/verticalGuide"
+        app:layout_constraintTop_toTopOf="@+id/changeButtonGuide" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Einfaches Tippen auf Item fügt dieses zum Warenkorb hinzu. \nTippen auf 'Rückgeld' führt in das Menü zur Berechnung des Rückgelds. \nTippen auf 'Bezahlen' führt direkt zur Speicherung des Verkaufs und Löschung des Warenkorbs."
+        app:layout_constraintBottom_toTopOf="@+id/horizontalGuide"
+        app:layout_constraintEnd_toStartOf="@+id/verticalGuide"
+        app:layout_constraintStart_toEndOf="@+id/editLayoutToggleButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Doppeltes Tippen auf einen Posten \nsenkt Anzahl um 1.\nLanges Tippen auf Posten \nentfernt ganzen Posten."
+        app:layout_constraintBottom_toTopOf="@+id/horizontalGuide"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/verticalGuide"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

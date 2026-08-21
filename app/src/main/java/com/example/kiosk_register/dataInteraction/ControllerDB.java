@@ -42,5 +42,13 @@ public class ControllerDB {
     public void saveSoldItem(SoldItem item) {
         soldItemDao.insert(item);
     }
-
+    public Item getItemByID(int id) {
+        return itemDao.getItemByID(id);
+    }
+    public void saveItem(Item item) {
+        itemDao.insert(item);
+    }
+    public void updateItem (Item item) {
+        itemDao.update(item);
+    }
 }

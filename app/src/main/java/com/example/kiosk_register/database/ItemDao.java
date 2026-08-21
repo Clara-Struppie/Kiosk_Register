@@ -3,6 +3,7 @@ package com.example.kiosk_register.database;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -10,6 +11,8 @@ import java.util.List;
 public interface ItemDao {
     @Insert
     void insert(Item item);
+    @Update
+    void update(Item item);
 
     // Used to "remove" an item from the list of items without interfering with the statistics
     @Query("UPDATE items SET active = 0 WHERE id = :itemID")
