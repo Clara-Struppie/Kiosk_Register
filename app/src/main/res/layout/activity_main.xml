@@ -398,16 +398,6 @@
         app:layout_constraintTop_toTopOf="@+id/changeButtonGuide" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Einfaches Tippen auf Item fügt dieses zum Warenkorb hinzu. \nTippen auf 'Rückgeld' führt in das Menü zur Berechnung des Rückgelds. \nTippen auf 'Bezahlen' führt direkt zur Speicherung des Verkaufs und Löschung des Warenkorbs."
-        app:layout_constraintBottom_toTopOf="@+id/horizontalGuide"
-        app:layout_constraintEnd_toStartOf="@+id/verticalGuide"
-        app:layout_constraintStart_toEndOf="@+id/editLayoutToggleButton"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

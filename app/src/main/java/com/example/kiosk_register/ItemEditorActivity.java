@@ -2,6 +2,7 @@ package com.example.kiosk_register;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -111,5 +112,10 @@ public class ItemEditorActivity extends AppCompatActivity {
                 finish();
             });
         });
+    }
+
+    public void cancelEdit (View view) {
+        setResult(RESULT_OK);
+        finish();
     }
 }

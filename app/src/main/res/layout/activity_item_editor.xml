@@ -33,6 +33,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Speichern"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/lightBlue"/>
+
+    <Button
+        android:id="@+id/cancelEditButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Abbrechen"
+        android:layout_marginTop="20dp"
+        android:onClick="cancelEdit"
+        android:backgroundTint="@color/lightRed"/>
 
 </LinearLayout>
