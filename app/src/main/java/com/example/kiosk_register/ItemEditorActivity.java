@@ -73,7 +73,7 @@ public class ItemEditorActivity extends AppCompatActivity {
             fullItemMap = itemMap;
 
             runOnUiThread(() -> {
-                setUpDropdown();
+                //setUpDropdown();
             });
         });
     }
@@ -81,12 +81,13 @@ public class ItemEditorActivity extends AppCompatActivity {
     /*
     Fills the dropdown menu with the names of all items in the hashmap
      */
-    private void setUpDropdown() {
+    /*private void setUpDropdown() {
         Spinner dropdown = findViewById(R.id.itemSpinner);
         String[] itemNames = fullItemMap.keySet().toArray(new String[0]);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemNames);
         dropdown.setAdapter(adapter);
     }
+    */
 
     private void loadExistingItem() {
         App.DB_EXECUTOR.execute(() -> {
