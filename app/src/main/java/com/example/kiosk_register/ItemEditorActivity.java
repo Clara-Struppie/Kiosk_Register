@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -73,7 +75,7 @@ public class ItemEditorActivity extends AppCompatActivity {
             fullItemMap = itemMap;
 
             runOnUiThread(() -> {
-                //setUpDropdown();
+                setUpDropdown();
             });
         });
     }
@@ -81,13 +83,21 @@ public class ItemEditorActivity extends AppCompatActivity {
     /*
     Fills the dropdown menu with the names of all items in the hashmap
      */
-    /*private void setUpDropdown() {
-        Spinner dropdown = findViewById(R.id.itemSpinner);
+    private void setUpDropdown() {
+        AutoCompleteTextView dropdown = findViewById(R.id.dropdown_menu);
         String[] itemNames = fullItemMap.keySet().toArray(new String[0]);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemNames);
         dropdown.setAdapter(adapter);
+
+        dropdown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.i("ItemEditorActivity", "clicked on item " + itemNames[i]);
+                displayItemInfo(itemNames[i]);
+            }
+        });
     }
-    */
 
     private void loadExistingItem() {
         App.DB_EXECUTOR.execute(() -> {
@@ -108,7 +118,19 @@ public class ItemEditorActivity extends AppCompatActivity {
     public void toggleActive(View view) {
         Switch switchButton = (Switch) view;
         isActive = switchButton.isChecked();
-        Log.i("ItemEditorActivity", Boolean.toString(isActive));
+    }
+
+    /*
+    Displays info of the selected item from the dropdown menu and deselects old item info
+     */
+    public void displayItemInfo(String itemName) {
+        //TO DO: add way to change buttonNumber on the old item that might get overwritten in the edit
+        Log.i("ItemEditorActivity", "display item info");
+        itemID = fullItemMap.get(itemName).getId();
+        String name = fullItemMap.get(itemName).getName();
+        String price = String.valueOf(fullItemMap.get(itemName).getPrice());
+        nameEditText.setText(name);
+        priceEditText.setText(price);
     }
 
     private void saveItem() {
