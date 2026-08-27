@@ -5,12 +5,19 @@
     android:orientation="vertical"
     android:padding="24dp">
 
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Artikel bearbeiten"
         android:textSize="24sp"
         android:textStyle="bold" />
+
+    <Spinner
+        android:id="@+id/itemSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dropdown"/>
 
     <EditText
         android:id="@+id/nameEditText"
@@ -27,6 +34,14 @@
         android:hint="Preis"
         android:inputType="numberDecimal"
         android:layout_marginTop="8dp" />
+
+    <Switch
+        android:id="@+id/activeItemSwitch"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="Item aktiv?"
+        android:onClick="toggleActive"/>
 
     <Button
         android:id="@+id/saveItemButton"

@@ -21,6 +21,9 @@ public interface ItemDao {
     void toggleOn(int itemID);
     @Query("SELECT * FROM items WHERE active = 1 ORDER BY id ASC")
     List<Item> getActiveItems();
+
+    @Query("SELECT * FROM items ORDER BY name")
+    List<Item> getAllItems();
     @Query("SELECT * FROM items WHERE id = :itemID")
     Item getItemByID(int itemID);
 }
