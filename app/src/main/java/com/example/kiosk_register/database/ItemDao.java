@@ -23,7 +23,7 @@ public interface ItemDao {
     List<Item> getActiveItems();
 
     @Query("SELECT * FROM items ORDER BY name")
-    List<Item> getAllItems();
+    Item[] getAllItems();
     @Query("SELECT * FROM items WHERE id = :itemID")
     Item getItemByID(int itemID);
 }

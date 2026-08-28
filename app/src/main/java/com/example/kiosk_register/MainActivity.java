@@ -542,6 +542,7 @@ public class MainActivity extends AppCompatActivity {
 
                 runOnUiThread(() -> {
                     refreshButtons();
+                    clearCart();
 
                     ToggleButton toggle = findViewById(R.id.editLayoutToggleButton);
                     toggle.setChecked(false);

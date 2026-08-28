@@ -21,6 +21,7 @@ import com.example.kiosk_register.database.Item;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
 
 public class ItemEditorActivity extends AppCompatActivity {
 
@@ -31,11 +32,13 @@ public class ItemEditorActivity extends AppCompatActivity {
 
     private EditText nameEditText;
     private EditText priceEditText;
-    private HashMap<String, Item> fullItemMap;
+    private TreeMap<String, Item> fullItemMap;
 
     private int buttonNumber;
     private int itemID = -1;
     private boolean isActive = true;
+
+    private Item oldItemEntry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,12 +70,14 @@ public class ItemEditorActivity extends AppCompatActivity {
      */
     private void loadAllItems() {
         App.DB_EXECUTOR.execute(() -> {
-            List<Item> itemList = controllerDB.getFullItemList();
+            Item[] itemList = controllerDB.getFullItemList();
             HashMap<String, Item> itemMap = new HashMap<>();
             for (Item item : itemList) {
                 itemMap.put(item.getName(), item);
             }
-            fullItemMap = itemMap;
+
+            //Sort alphabetically by turning the hashmap into a treemap
+            fullItemMap = new TreeMap<>(itemMap);
 
             runOnUiThread(() -> {
                 setUpDropdown();
@@ -107,6 +112,7 @@ public class ItemEditorActivity extends AppCompatActivity {
                 runOnUiThread(() -> {
                     nameEditText.setText(item.getName());
                     priceEditText.setText(String.valueOf(item.getPrice()));
+                    oldItemEntry = item;
                 });
             }
         });
@@ -124,7 +130,6 @@ public class ItemEditorActivity extends AppCompatActivity {
     Displays info of the selected item from the dropdown menu and deselects old item info
      */
     public void displayItemInfo(String itemName) {
-        //TO DO: add way to change buttonNumber on the old item that might get overwritten in the edit
         Log.i("ItemEditorActivity", "display item info");
         itemID = fullItemMap.get(itemName).getId();
         String name = fullItemMap.get(itemName).getName();
@@ -162,6 +167,10 @@ public class ItemEditorActivity extends AppCompatActivity {
 
             // if new item is saved
             if (itemID == -1) {
+                if (oldItemEntry != null) {
+                    deactivateOldItem();
+                }
+
                 Item item = new Item();
 
                 item.setName(name);
@@ -171,6 +180,9 @@ public class ItemEditorActivity extends AppCompatActivity {
 
                 controllerDB.saveItem(item);
             } else { //for edited items
+                if (itemID != oldItemEntry.getId()) {
+                    deactivateOldItem();
+                }
                 Item item = controllerDB.getItemByID(itemID);
 
                 if (item != null) {
@@ -189,6 +201,12 @@ public class ItemEditorActivity extends AppCompatActivity {
                 finish();
             });
         });
+    }
+
+    private void deactivateOldItem() {
+        oldItemEntry.setActive(false);
+        oldItemEntry.setButtonNumber(-1);
+        controllerDB.updateItem(oldItemEntry);
     }
 
     public void cancelEdit (View view) {
