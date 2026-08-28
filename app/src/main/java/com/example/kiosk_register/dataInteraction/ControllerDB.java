@@ -42,6 +42,9 @@ public class ControllerDB {
     public int getRecentSaleID(long timestamp) {
         return saleDao.getRecentSaleID(timestamp);
     }
+    public List<Sale> getLatestSales(long currentTime) {
+        return saleDao.getLatestSales(currentTime);
+    }
     public void saveSoldItem(SoldItem item) {
         soldItemDao.insert(item);
     }

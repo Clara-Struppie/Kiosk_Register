@@ -12,11 +12,8 @@ public interface SaleDao {
     @Insert
     void insert(Sale sale);
 
-    @Query("SELECT * FROM sales ORDER BY id ASC")
-    List<Sale> getAllSales();
+    @Query("SELECT * FROM sales WHERE timeOfSale >= (:currentTime - 2592000000) ORDER BY timeOfSale ASC")
+    List<Sale> getLatestSales(long currentTime);
     @Query("SELECT id FROM sales WHERE timeOfSale = :timestamp")
     int getRecentSaleID(long timestamp);
-
-    //TO DO:
-    //Query for statistics
 }
