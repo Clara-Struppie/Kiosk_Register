@@ -37,7 +37,6 @@ public class ItemEditorActivity extends AppCompatActivity {
     private int buttonNumber;
     private int itemID = -1;
     private boolean isActive = true;
-
     private Item oldItemEntry;
 
     @Override
@@ -70,7 +69,16 @@ public class ItemEditorActivity extends AppCompatActivity {
      */
     private void loadAllItems() {
         App.DB_EXECUTOR.execute(() -> {
-            Item[] itemList = controllerDB.getFullItemList();
+            List<Item> itemList = controllerDB.getFullItemList();
+
+            //add dummy entry for a new item
+            Item newItemSlot = new Item();
+            newItemSlot.setName("...Neues Item...");
+            newItemSlot.setPrice(0.0);
+            newItemSlot.setId(-1);
+            newItemSlot.setButtonNumber(-1);
+            itemList.add(newItemSlot);
+
             HashMap<String, Item> itemMap = new HashMap<>();
             for (Item item : itemList) {
                 itemMap.put(item.getName(), item);

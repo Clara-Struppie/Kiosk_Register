@@ -33,7 +33,7 @@ public class ControllerDB {
     public List<Item> getActiveList() {
         return itemDao.getActiveItems();
     }
-    public Item[] getFullItemList() {
+    public List<Item> getFullItemList() {
         return itemDao.getAllItems();
     }
     public void saveSale(Sale sale) {
