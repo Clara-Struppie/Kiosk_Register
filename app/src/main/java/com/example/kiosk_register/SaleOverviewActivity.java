@@ -1,9 +1,7 @@
 package com.example.kiosk_register;
 
-import android.content.Intent;
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -44,8 +42,18 @@ public class SaleOverviewActivity extends AppCompatActivity {
         controllerDB = new ControllerDB(this);
 
         long currentTime = System.currentTimeMillis();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(currentTime);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        Date date = calendar.getTime();
+        long currentDayMillis = date.getTime();
+
         App.DB_EXECUTOR.execute(() -> {
-            salesList = controllerDB.getLatestSales(currentTime);
+            salesList = controllerDB.getLatestSales(currentDayMillis);
 
             runOnUiThread(() -> {
                 fillDateMap();

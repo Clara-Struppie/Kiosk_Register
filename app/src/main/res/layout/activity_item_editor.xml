@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/editRootLayour"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="24dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:onClick="hideKeyboard"
         android:theme="@style/Theme.MaterialComponents.Light">
 
 
@@ -26,6 +30,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:inputType="none"
+                android:focusable="false"
                 android:text="Vorhandenes Item auswählen" />
         </com.google.android.material.textfield.TextInputLayout>
 

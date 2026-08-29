@@ -26,6 +26,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:inputType="none"
+            android:focusable="false"
             android:text="Datum auswählen" />
     </com.google.android.material.textfield.TextInputLayout>
 
