@@ -14,6 +14,7 @@ import com.example.kiosk_register.database.Sale;
 import com.example.kiosk_register.database.SaleDao;
 import com.example.kiosk_register.database.SoldItem;
 import com.example.kiosk_register.database.SoldItemDao;
+import com.example.kiosk_register.database.SoldItemWithName;
 
 import java.util.List;
 
@@ -56,5 +57,8 @@ public class ControllerDB {
     }
     public void updateItem (Item item) {
         itemDao.update(item);
+    }
+    public List<SoldItemWithName> getSoldItemsFromSalesList (List<Integer> saleIDList) {
+        return soldItemDao.getSoldItemsFromSalesList(saleIDList);
     }
 }

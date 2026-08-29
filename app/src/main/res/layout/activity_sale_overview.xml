@@ -28,4 +28,33 @@
             android:inputType="none"
             android:text="Datum auswählen" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <ScrollView
+        android:id="@+id/statisticScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/white"
+        android:elevation="3dp"
+>
+
+        <LinearLayout
+            android:id="@+id/statisticListLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:orientation="vertical"
+            android:overScrollMode="ifContentScrolls">
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/cancelButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Zurück"
+        android:layout_marginTop="20dp"
+        android:onClick="cancelStatistics"
+        android:backgroundTint="@color/lightRed"/>
 </LinearLayout>

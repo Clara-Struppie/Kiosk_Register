@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Dao
@@ -14,6 +15,6 @@ public interface SoldItemDao {
     @Query("SELECT * FROM soldItems ORDER BY id ASC")
     List<SoldItem> getAllSoldItems();
 
-    //TO DO:
-    //Query for statistics
+    @Query("SELECT items.name, soldItems.quantity FROM soldItems JOIN items ON soldItems.itemID=items.id WHERE soldItems.saleID IN (:saleIDList)")
+    List<SoldItemWithName> getSoldItemsFromSalesList(List<Integer> saleIDList);
 }

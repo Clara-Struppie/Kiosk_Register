@@ -484,6 +484,11 @@ public class MainActivity extends AppCompatActivity {
         adjustTotal();
     }
 
+    public void openStatisticScreen(View view) {
+        Intent intent = new Intent(MainActivity.this, SaleOverviewActivity.class);
+        MainActivity.this.startActivity(intent);
+    }
+
     /*
     Class for Double Tab implementation by geeksforgeeks https://www.geeksforgeeks.org/android/double-tap-on-a-button-in-android/
      */

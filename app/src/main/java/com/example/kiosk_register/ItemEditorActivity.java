@@ -106,7 +106,6 @@ public class ItemEditorActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.i("ItemEditorActivity", "clicked on item " + itemNames[i]);
                 displayItemInfo(itemNames[i]);
             }
         });

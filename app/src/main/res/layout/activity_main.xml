@@ -407,4 +407,15 @@
         app:layout_constraintStart_toStartOf="@+id/verticalGuide"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/statisticsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Tagesstatistiken"
+        android:onClick="openStatisticScreen"
+        app:layout_constraintStart_toEndOf="@+id/editLayoutToggleButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
