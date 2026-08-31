@@ -189,7 +189,8 @@ public class ItemEditorActivity extends AppCompatActivity {
 
                 controllerDB.saveItem(item);
             } else { //for edited items
-                if (itemID != oldItemEntry.getId()) {
+                int oldID = oldItemEntry != null ? oldItemEntry.getId() : -1;
+                if (itemID != oldID && oldID != -1) {
                     deactivateOldItem();
                 }
                 Item item = controllerDB.getItemByID(itemID);
