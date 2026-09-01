@@ -75,8 +75,6 @@ public class ItemEditorActivity extends AppCompatActivity {
 
             //add dummy entry for a new item
             Item newItemSlot = new Item();
-            newItemSlot.setName("...Neues Item...");
-            newItemSlot.setPrice(0.0);
             newItemSlot.setId(-1);
             newItemSlot.setButtonNumber(-1);
             itemList.add(newItemSlot);
