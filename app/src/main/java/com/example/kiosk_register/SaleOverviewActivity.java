@@ -203,7 +203,7 @@ public class SaleOverviewActivity extends AppCompatActivity {
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("text/csv");
         String dateString = chosenDate.replace(".", "-");
-        intent.putExtra(Intent.EXTRA_TITLE, "Verkaufsstatistik_" + dateString);
+        intent.putExtra(Intent.EXTRA_TITLE, "Verkaufsstatistik_" + dateString + ".csv");
 
         startActivityForResult(intent, CREATE_CSV_FILE);
     }

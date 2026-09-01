@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Kiosk_Register</string>
+    <string name="app_name">Kassenapp Strand</string>
     <string name="total_text">Total: </string>
     <string name="paid_text">Gezahlt: </string>
     <string name="change_text">Rückgeld: </string>
