@@ -1,5 +1,7 @@
 package com.example.kiosk_register;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +20,10 @@ import com.example.kiosk_register.dataInteraction.ControllerDB;
 import com.example.kiosk_register.database.Sale;
 import com.example.kiosk_register.database.SoldItemWithName;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,6 +39,7 @@ public class SaleOverviewActivity extends AppCompatActivity {
     private List<Sale> salesList;
     private TreeMap<String, Integer> soldItemsMap;
     private TreeMap<String, List<Integer>> dateMap;
+    private String chosenDate = "";
 
 
     @Override
@@ -115,7 +123,8 @@ public class SaleOverviewActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                displaySoldItems(dateStrings[i]);
+                chosenDate = dateStrings[i];
+                displaySoldItems(chosenDate);
             }
         });
     }
@@ -135,6 +144,9 @@ public class SaleOverviewActivity extends AppCompatActivity {
         });
     }
 
+    /*
+    Creates a sorted Map containing item names and the quantity of the corresponding item sold
+     */
     private void listSoldItems(List<SoldItemWithName> soldItemList) {
         soldItemsMap = new TreeMap<>();
         for (SoldItemWithName item : soldItemList) {
@@ -177,5 +189,83 @@ public class SaleOverviewActivity extends AppCompatActivity {
     public void cancelStatistics(View view) {
         setResult(RESULT_OK);
         finish();
+    }
+
+    private static final int CREATE_CSV_FILE = 100;
+
+    public void exportStatistics(View view) {
+        if (soldItemsMap == null || soldItemsMap.isEmpty()) {
+            Toast.makeText(this, "Keine Verkaufsdaten zum Exportieren vorhanden.", 0).show();
+            return;
+        }
+
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("text/csv");
+        String dateString = chosenDate.replace(".", "-");
+        intent.putExtra(Intent.EXTRA_TITLE, "Verkaufsstatistik_" + dateString);
+
+        startActivityForResult(intent, CREATE_CSV_FILE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == CREATE_CSV_FILE && resultCode == RESULT_OK && data != null) {
+            Uri uri = data.getData();
+
+            if (uri == null) {
+                return;
+            }
+
+            try {
+                OutputStream outputStream = getContentResolver().openOutputStream(uri);
+
+                if (outputStream == null) {
+                    throw new IOException("Datei konnte nicht geöffnet werden.");
+                }
+
+                OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
+
+                writer.write("Verkaufsstatistik;" + chosenDate + "\n");
+                writer.write("Artikel;Menge\n");
+
+                for (Map.Entry<String, Integer> entry : soldItemsMap.entrySet()) {
+                    //make sure there are no unwanted symbols in the String
+                    writer.write(escapeCsv(entry.getKey()));
+                    writer.write(";");
+                    writer.write(String.valueOf(entry.getValue()));
+                    writer.write("\n");
+                }
+
+                writer.flush();
+                writer.close();
+
+                Toast.makeText(this, "Verkaufsstatistik für " + chosenDate + " exportiert.", 1).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+
+                Toast.makeText(this, "Fehler beim Exportieren der Verkaufsstatistik", 1).show();
+            }
+        }
+    }
+
+    /*
+    Used to replace escape \ symbols that might have snuck into item names
+     */
+    private String escapeCsv(String value) {
+        if (value == null) {
+            return "";
+        }
+
+        if (value.contains(";")
+                || value.contains("\"")
+                || value.contains("\n")
+                || value.contains("\r")) {
+            value = value.replace("\"", "\"\"");
+            return "\"" + value + "\"";
+        }
+        return value;
     }
 }

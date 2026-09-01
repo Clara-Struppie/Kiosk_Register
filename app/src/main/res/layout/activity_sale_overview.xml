@@ -1,43 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="24dp"
-    android:theme="@style/Theme.MaterialComponents.Light">
+    android:layout_height="match_parent"
+    android:background="@color/lightGray"
+    android:backgroundTint="@color/lightGray"
+    tools:context=".SaleOverviewActivity">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/maxSoldItemListGuide"
+        android:layout_width="45dp"
+        android:layout_height="28dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Übersicht Verkaufszahlen"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:theme="@style/Theme.MaterialComponents.Light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <AutoCompleteTextView
-            android:id="@+id/dropdown_saleDates"
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Übersicht Verkaufszahlen"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:inputType="none"
-            android:focusable="false"
-            android:text="Datum auswählen" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <AutoCompleteTextView
+                android:id="@+id/dropdown_saleDates"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:inputType="none"
+                android:text="Datum auswählen" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
 
     <ScrollView
         android:id="@+id/statisticScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
         android:background="@color/white"
         android:elevation="3dp"
->
+        app:layout_constraintBottom_toTopOf="@+id/exportButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_weight="0.6">
 
         <LinearLayout
             android:id="@+id/statisticListLayout"
@@ -51,11 +78,30 @@
     </ScrollView>
 
     <Button
+        android:id="@+id/exportButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="26dp"
+        android:backgroundTint="@color/lightBlue"
+        android:onClick="exportStatistics"
+        android:text="Exportieren"
+        app:layout_constraintBottom_toTopOf="@+id/cancelButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statisticScrollView" />
+
+    <Button
         android:id="@+id/cancelButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Zurück"
-        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="26dp"
+        android:backgroundTint="@color/lightRed"
         android:onClick="cancelStatistics"
-        android:backgroundTint="@color/lightRed"/>
-</LinearLayout>
+        android:text="Zurück"
+        app:layout_constraintBottom_toTopOf="@id/maxSoldItemListGuide"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/exportButton" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
